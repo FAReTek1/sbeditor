@@ -1481,6 +1481,7 @@ class Addons:
                         input_id: str = None, obscurer: str | Block = None):
             return self.set_arg("arg0", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer)
 
+
 class Pen:
     class Clear(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -1503,22 +1504,21 @@ class Pen:
             super().__init__(None, "pen_setPenColorToColor", shadow=shadow, pos=pos)
 
         def set_color(self, value="#FF0000", input_type: str | int = "color", shadow_status: int = 1, *,
-                       input_id: str = None, obscurer: str | Block = None):
+                      input_id: str = None, obscurer: str | Block = None):
             return self.add_input(
                 Input("COLOR", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
-
 
     class ChangePenParamBy(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
             super().__init__(None, "pen_changePenColorParamBy", shadow=shadow, pos=pos)
 
         def set_param(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
-                       input_id: str = None, obscurer: str | Block = None):
+                      input_id: str = None, obscurer: str | Block = None):
             return self.add_input(
                 Input("COLOR_PARAM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
         def set_value(self, value="10", input_type: str | int = "number", shadow_status: int = 1, *,
-                       input_id: str = None, obscurer: str | Block = None):
+                      input_id: str = None, obscurer: str | Block = None):
             return self.add_input(
                 Input("VALUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1527,12 +1527,12 @@ class Pen:
             super().__init__(None, "pen_setPenColorParamTo", shadow=shadow, pos=pos)
 
         def set_param(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
-                       input_id: str = None, obscurer: str | Block = None):
+                      input_id: str = None, obscurer: str | Block = None):
             return self.add_input(
                 Input("COLOR_PARAM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
         def set_value(self, value="10", input_type: str | int = "number", shadow_status: int = 1, *,
-                       input_id: str = None, obscurer: str | Block = None):
+                      input_id: str = None, obscurer: str | Block = None):
             return self.add_input(
                 Input("VALUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1541,7 +1541,7 @@ class Pen:
             super().__init__(None, "pen_changePenSizeBy", shadow=shadow, pos=pos)
 
         def set_size(self, value="1", input_type: str | int = "positive number", shadow_status: int = 1, *,
-                       input_id: str = None, obscurer: str | Block = None):
+                     input_id: str = None, obscurer: str | Block = None):
             return self.add_input(
                 Input("SIZE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1550,7 +1550,7 @@ class Pen:
             super().__init__(None, "pen_setPenSizeTo", shadow=shadow, pos=pos)
 
         def set_size(self, value="1", input_type: str | int = "positive number", shadow_status: int = 1, *,
-                       input_id: str = None, obscurer: str | Block = None):
+                     input_id: str = None, obscurer: str | Block = None):
             return self.add_input(
                 Input("SIZE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1559,7 +1559,7 @@ class Pen:
             super().__init__(None, "pen_setPenHueToNumber", shadow=shadow, pos=pos)
 
         def set_hue(self, value="1", input_type: str | int = "positive number", shadow_status: int = 1, *,
-                       input_id: str = None, obscurer: str | Block = None):
+                    input_id: str = None, obscurer: str | Block = None):
             return self.add_input(
                 Input("HUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1568,7 +1568,7 @@ class Pen:
             super().__init__(None, "pen_changePenHueBy", shadow=shadow, pos=pos)
 
         def set_hue(self, value="1", input_type: str | int = "positive number", shadow_status: int = 1, *,
-                       input_id: str = None, obscurer: str | Block = None):
+                    input_id: str = None, obscurer: str | Block = None):
             return self.add_input(
                 Input("HUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1577,7 +1577,7 @@ class Pen:
             super().__init__(None, "pen_setPenShadeToNumber", shadow=shadow, pos=pos)
 
         def set_shade(self, value="1", input_type: str | int = "positive number", shadow_status: int = 1, *,
-                       input_id: str = None, obscurer: str | Block = None):
+                      input_id: str = None, obscurer: str | Block = None):
             return self.add_input(
                 Input("SHADE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1586,7 +1586,7 @@ class Pen:
             super().__init__(None, "pen_changePenShadeBy", shadow=shadow, pos=pos)
 
         def set_shade(self, value="1", input_type: str | int = "positive number", shadow_status: int = 1, *,
-                       input_id: str = None, obscurer: str | Block = None):
+                      input_id: str = None, obscurer: str | Block = None):
             return self.add_input(
                 Input("SHADE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1596,7 +1596,6 @@ class Pen:
 
         def set_color_param(self, value: str = "color", value_id: str = None):
             return self.add_field(Field("colorParam", value, value_id))
-
 
 
 class OtherBlocks:
