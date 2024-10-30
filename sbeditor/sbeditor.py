@@ -1109,7 +1109,7 @@ class Target(ProjectItem):
         """
         if name is None:
             name = ''
-        elif name in ("_random_", "_mouse_", "_edge_", "_myself_"):
+        elif name in ("_random_", "_mouse_", "_edge_", "_myself_", "_stage_"):
             raise ValueError(f"Sprite is not allowed to be called '{name}'")
 
         if variables is None:

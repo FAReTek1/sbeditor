@@ -717,11 +717,11 @@ class Control:
             return self.add_input(inp)
 
         def set_value(self, value="5", input_type: str | int = "positive integer", shadow_status: int = 1, *,
-                          input_id: str = None):
+                      input_id: str = None):
             inp = Input("VALUE", value, input_type, shadow_status, input_id=input_id)
             return self.add_input(inp)
 
-        def set_variable(self, value: str="i", value_id: str = None):
+        def set_variable(self, value: str = "i", value_id: str = None):
             return self.add_field(Field("VARIABLE", value, value_id))
 
     class GetCounter(Block):
@@ -747,6 +747,15 @@ class Control:
 
 
 class Sensing:
+    class TouchingObject(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "sensing_touchingobject", shadow=shadow, pos=pos)
+
+        def set_touching_object_menu(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
+                                     input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("TOUCHINGOBJECTMENU", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
     class TouchingObjectMenu(Block):
         def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
             super().__init__(None, "sensing_touchingobjectmenu", shadow=shadow, pos=pos)
@@ -754,16 +763,173 @@ class Sensing:
         def set_touching_object_menu(self, value: str = "_mouse_", value_id: str = None):
             return self.add_field(Field("TOUCHINGOBJECTMENU", value, value_id))
 
+    class TouchingColor(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "sensing_touchingcolor", shadow=shadow, pos=pos)
+
+        def set_color(self, value="#0000FF", input_type: str | int = "color", shadow_status: int = 1, *,
+                      input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("COLOR", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class ColorIsTouchingColor(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "sensing_coloristouchingcolor", shadow=shadow, pos=pos)
+
+        def set_color1(self, value="#0000FF", input_type: str | int = "color", shadow_status: int = 1, *,
+                       input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("COLOR", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+        def set_color2(self, value="#00FF00", input_type: str | int = "color", shadow_status: int = 1, *,
+                       input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("COLOR2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class DistanceTo(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "sensing_distanceto", shadow=shadow, pos=pos)
+
+        def set_distance_to_menu(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
+                                 input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("DISTANCETOMENU", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class DistanceToMenu(Block):
+        def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "sensing_distancetomenu", shadow=shadow, pos=pos)
+
+        def set_distance_to_menu(self, value: str = "_mouse_", value_id: str = None):
+            return self.add_field(Field("DISTANCETOMENU", value, value_id))
+
     class Loud(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
             super().__init__(None, "sensing_loud", shadow=shadow, pos=pos)
 
+    class AskAndWait(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "sensing_askandwait", shadow=shadow, pos=pos)
 
-# class Data:
-#     class Variable(Block):
-#         def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
-#             super().__init__(None, "data_variable", shadow=shadow, pos=pos)
-#
+        def set_question(self, value="What's your name?", input_type: str | int = "string", shadow_status: int = 1, *,
+                         input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("QUESTION", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer)
+            )
+
+    class Answer(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "sensing_answer", shadow=shadow, pos=pos)
+
+    class KeyPressed(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "sensing_keypressed", shadow=shadow, pos=pos)
+
+        def set_key_option(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
+                           input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("KEY_OPTION", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class KeyOptions(Block):
+        def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "sensing_keyoptions", shadow=shadow, pos=pos)
+
+        def set_key_option(self, value: str = "space", value_id: str = None):
+            return self.add_field(Field("KEY_OPTION", value, value_id))
+
+    class MouseDown(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "sensing_mousedown", shadow=shadow, pos=pos)
+
+    class MouseX(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "sensing_mousex", shadow=shadow, pos=pos)
+
+    class MouseY(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "sensing_mousey", shadow=shadow, pos=pos)
+
+    class SetDragMode(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "sensing_setdragmode", shadow=shadow, pos=pos)
+
+        def set_drag_mode(self, value: str = "draggable", value_id: str = None):
+            return self.add_field(Field("DRAG_MODE", value, value_id))
+
+    class Loudness(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "sensing_loudness", shadow=shadow, pos=pos)
+
+    class Timer(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "sensing_timer", shadow=shadow, pos=pos)
+
+    class ResetTimer(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "sensing_resettimer", shadow=shadow, pos=pos)
+
+    class Of(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "sensing_of", shadow=shadow, pos=pos)
+
+        def set_object(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
+                       input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("OBJECT", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+        def set_property(self, value: str = "backdrop #", value_id: str = None):
+            return self.add_field(Field("PROPERTY", value, value_id))
+
+    class OfObjectMenu(Block):
+        def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "sensing_of_object_menu", shadow=shadow, pos=pos)
+
+        def set_object(self, value: str = "_stage_", value_id: str = None):
+            return self.add_field(Field("OBJECT", value, value_id))
+
+    class Current(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "sensing_current", shadow=shadow, pos=pos)
+
+        def set_current_menu(self, value: str = "YEAR", value_id: str = None):
+            return self.add_field(Field("CURRENTMENU", value, value_id))
+
+    class DaysSince2000(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "sensing_dayssince2000", shadow=shadow, pos=pos)
+
+    class Username(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "sensing_username", shadow=shadow, pos=pos)
+
+    class UserID(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "sensing_userid", shadow=shadow, pos=pos)
+
+
+
+class Data:
+    class Variable(Block):
+        def __init__(self, value, input_type: str | int = "variable", shadow_status: int = None, *,
+                     pos: tuple[int | float, int | float] = (0, 0)):
+            inp = Input(None, value, input_type, shadow_status)
+            if inp.type_str == "block":
+                arr = inp.to_json()[0]
+            else:
+                arr = inp.to_json()[1][-1]
+
+            super().__init__(array=arr, pos=pos)
+
+    class List(Block):
+        def __init__(self, value, input_type: str | int = "list", shadow_status: int = None, *,
+                     pos: tuple[int | float, int | float] = (0, 0)):
+            inp = Input(None, value, input_type, shadow_status)
+            if inp.type_str == "block":
+                arr = inp.to_json()[0]
+            else:
+                arr = inp.to_json()[1][-1]
+
+            super().__init__(array=arr, pos=pos)
+
 
 def link_chain(*_chain: [Block], target: Target = None) -> [Block]:
     """
@@ -783,4 +949,3 @@ def link_chain(*_chain: [Block], target: Target = None) -> [Block]:
     )
 
     return _chain
-
