@@ -1563,7 +1563,7 @@ class Extension(ProjectItem):
 
 
 class Meta(ProjectItem):
-    def __init__(self, semver: str = "3.0.0", vm: str = "", agent: str = ""):
+    def __init__(self, semver: str = "3.0.0", vm: str = "", agent: str = "", platform: dict=None):
         """
         Represents metadata of the project
         https://en.scratch-wiki.info/wiki/Scratch_File_Format#Metadata
@@ -1571,6 +1571,7 @@ class Meta(ProjectItem):
         self.semver = semver
         self.vm = vm
         self.agent = agent
+        self.platform = platform
 
         super().__init__(semver)
 
@@ -1578,23 +1579,34 @@ class Meta(ProjectItem):
         return f"Meta<{self.semver} : {self.vm} : {self.agent}>"
 
     def to_json(self):
-        return {
+        _json = {
             "semver": self.semver,
             "vm": self.vm,
             "agent": self.agent
         }
+
+        if self.platform is not None:
+            _json["platform"] = self.platform
+        return _json
 
     @staticmethod
     def from_json(data, _id: str = None):
         semver = data["semver"]
         vm = data.get("vm")
         agent = data.get("agent")
+        platform = data.get("platform")
 
         if EDIT_META or vm is None:
             vm = "0.1.0"
         if EDIT_META or agent is None:
             agent = "Python: sbeditor.py by https://scratch.mit.edu/users/faretek1/"
-        return Meta(semver, vm, agent)
+        if EDIT_META or platform is None:
+            platform = {
+                "name": "sbeditor.py",
+                "url": "https://github.com/FAReTek1/sbeditor"
+            }
+
+        return Meta(semver, vm, agent, platform)
 
 
 class Monitor(ProjectItem):
