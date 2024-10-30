@@ -2,17 +2,17 @@ from setuptools import setup
 import subprocess
 
 # Copied from https://www.youtube.com/watch?v=U-aIPTS580s
-remote_version = subprocess.run(['git', 'describe', '--tags'], stdout=subprocess.PIPE).stdout.decode('utf-8').strip()
-assert '.' in remote_version
+# remote_version = subprocess.run(['git', 'describe', '--tags'], stdout=subprocess.PIPE).stdout.decode('utf-8').strip()
+# assert '.' in remote_version
 
 # with open('README.md', 'r', encoding="utf-8") as readme:
 #     long_description = readme.read()
 
-print(remote_version)
+# print(remote_version)
 
 setup(
     name='sbeditor',
-    version=remote_version,
+    version="v0.0.0-beta.5",
     packages=['sbeditor'],
     url='https://github.com/FAReTek1/sbeditor',
     license='MIT',
