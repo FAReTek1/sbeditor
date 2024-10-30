@@ -1480,3 +1480,32 @@ class Addons:
         def set_message(self, value='', input_type: str | int = "string", shadow_status: int = 1, *,
                         input_id: str = None, obscurer: str | Block = None):
             return self.set_arg("arg0", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer)
+
+
+class OtherBlocks:
+    class Note(Block):
+        def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "note", shadow=shadow, pos=pos)
+
+        def set_note(self, value: str = "60", value_id: str = None):
+            return self.add_field(Field("NOTE", value, value_id))
+
+    class Matrix(Block):
+        def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "matrix", shadow=shadow, pos=pos)
+
+        def set_note(self, value: str = "0101010101100010101000100", value_id: str = None):
+            return self.add_field(Field("MATRIX", value, value_id))
+
+    class RedHatBlock(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            # Note: There is no single opcode for the red hat block as the block is simply the result of an error
+            # The opcode here has been set to 'redhatblock' to make it obvious what is going on
+
+            # (It's not called red_hat_block because then TurboWarp thinks that # it's supposed to find an extension
+            # called red)
+
+            # Appendix: You **CAN** actually add comments to this block, however it will make the block misbehave in the
+            # editor. The the link between the comment and the block will not be visible, but will be visible with the
+            # corresponding TurboWarp addon
+            super().__init__(None, "redhatblock", shadow=shadow, pos=pos)
