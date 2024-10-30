@@ -1,4 +1,4 @@
-from .sbeditor import Block, Input, Field, Mutation, Target
+from .sbeditor import *
 
 
 class Motion:
@@ -1154,8 +1154,47 @@ class Data:
                 arr = inp.to_json()[1][-1]
 
             super().__init__(array=arr, pos=pos)
+            self.opcode = "data_variable"
 
-    class List(Block):
+    class SetVariableTo(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "data_setvariableto", shadow=shadow, pos=pos)
+
+        def set_value(self, value="0", input_type: str | int = "string", shadow_status: int = 1, *,
+                      input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("VALUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+        def set_variable(self, value: str | Variable = "variable", value_id: str = None):
+            return self.add_field(Field("VARIABLE", value, value_id))
+
+    class ChangeVariableBy(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "data_changevariableby", shadow=shadow, pos=pos)
+
+        def set_value(self, value="1", input_type: str | int = "number", shadow_status: int = 1, *,
+                      input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("VALUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+        def set_variable(self, value: str | Variable = "variable", value_id: str = None):
+            return self.add_field(Field("VARIABLE", value, value_id))
+
+    class ShowVariable(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "data_showvariable", shadow=shadow, pos=pos)
+
+        def set_variable(self, value: str | Variable = "variable", value_id: str = None):
+            return self.add_field(Field("VARIABLE", value, value_id))
+
+    class HideVariable(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "data_hidevariable", shadow=shadow, pos=pos)
+
+        def set_variable(self, value: str | Variable = "variable", value_id: str = None):
+            return self.add_field(Field("VARIABLE", value, value_id))
+
+    class ListContents(Block):
         def __init__(self, value, input_type: str | int = "list", shadow_status: int = None, *,
                      pos: tuple[int | float, int | float] = (0, 0)):
             inp = Input(None, value, input_type, shadow_status)
@@ -1165,23 +1204,134 @@ class Data:
                 arr = inp.to_json()[1][-1]
 
             super().__init__(array=arr, pos=pos)
+            self.opcode = "data_listcontents"
 
+    class AddToList(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "data_addtolist", shadow=shadow, pos=pos)
 
-def link_chain(*_chain: [Block], target: Target = None) -> [Block]:
-    """
-    Attaches a chain together so that the parent/next attributes are linked to the relevant blocks.
+        def set_item(self, value="thing", input_type: str | int = "string", shadow_status: int = 1, *,
+                     input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("ITEM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
-    Useful for chains that are a substack of a C-Mouth, to input the chain's first item while simultaneously linking the
-    chain together without setting variables
-    :param _chain: Blockchain (List/tuple of blocks)
-    :param target: Target to attach to the first block
-    :return: The chain you gave in
-    """
-    if _chain[0].target is None and target is not None:
-        target.add_block(_chain[0])
+        def set_list(self, value: str | List = "list", value_id: str = None):
+            return self.add_field(Field("LIST", value, value_id))
 
-    _chain[0].attach_chain(
-        _chain[1:]
-    )
+    class DeleteOfList(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "data_deleteoflist", shadow=shadow, pos=pos)
 
-    return _chain
+        def set_index(self, value="random", input_type: str | int = "positive integer", shadow_status: int = 1, *,
+                     input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("INDEX", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+        def set_list(self, value: str | List = "list", value_id: str = None):
+            return self.add_field(Field("LIST", value, value_id))
+
+    class InsertAtList(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "data_insertatlist", shadow=shadow, pos=pos)
+
+        def set_item(self, value="thing", input_type: str | int = "string", shadow_status: int = 1, *,
+                     input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("ITEM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+        def set_index(self, value="random", input_type: str | int = "positive integer", shadow_status: int = 1, *,
+                     input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("INDEX", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+        def set_list(self, value: str | List = "list", value_id: str = None):
+            return self.add_field(Field("LIST", value, value_id))
+
+    class DeleteAllOfList(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "data_deletealloflist", shadow=shadow, pos=pos)
+
+        def set_list(self, value: str | List = "list", value_id: str = None):
+            return self.add_field(Field("LIST", value, value_id))
+
+    class ReplaceItemOfList(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "data_replaceitemoflist", shadow=shadow, pos=pos)
+
+        def set_item(self, value="thing", input_type: str | int = "string", shadow_status: int = 1, *,
+                     input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("ITEM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+        def set_index(self, value="random", input_type: str | int = "positive integer", shadow_status: int = 1, *,
+                      input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("INDEX", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+        def set_list(self, value: str | List = "list", value_id: str = None):
+            return self.add_field(Field("LIST", value, value_id))
+
+    class ItemOfList(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "data_itemoflist", shadow=shadow, pos=pos)
+
+        def set_index(self, value="random", input_type: str | int = "positive integer", shadow_status: int = 1, *,
+                      input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("INDEX", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+        def set_list(self, value: str | List = "list", value_id: str = None):
+            return self.add_field(Field("LIST", value, value_id))
+
+    class ItemNumOfList(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "data_itemnumoflist", shadow=shadow, pos=pos)
+
+        def set_item(self, value="thing", input_type: str | int = "string", shadow_status: int = 1, *,
+                     input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("ITEM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+        def set_list(self, value: str | List = "list", value_id: str = None):
+            return self.add_field(Field("LIST", value, value_id))
+
+    class LengthOfList(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "data_lengthoflist", shadow=shadow, pos=pos)
+
+        def set_list(self, value: str | List = "list", value_id: str = None):
+            return self.add_field(Field("LIST", value, value_id))
+
+    class ListContainsItem(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "data_listcontainsitem", shadow=shadow, pos=pos)
+
+        def set_item(self, value="thing", input_type: str | int = "string", shadow_status: int = 1, *,
+                     input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("ITEM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+        def set_list(self, value: str | List = "list", value_id: str = None):
+            return self.add_field(Field("LIST", value, value_id))
+
+    class ShowList(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "data_showlist", shadow=shadow, pos=pos)
+
+        def set_list(self, value: str | List = "list", value_id: str = None):
+            return self.add_field(Field("LIST", value, value_id))
+
+    class HideList(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "data_hidelist", shadow=shadow, pos=pos)
+
+        def set_list(self, value: str | List = "list", value_id: str = None):
+            return self.add_field(Field("LIST", value, value_id))
+
+    class ListIndexAll(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "data_listindexall", shadow=shadow, pos=pos)
+
+    class ListIndexRandom(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "data_listindexrandom", shadow=shadow, pos=pos)
