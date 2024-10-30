@@ -1806,29 +1806,3 @@ class Project(ProjectItem):
     def obfuscate(self):
         for target in self.targets:
             target.obfuscate()
-
-
-if __name__ == '__main__':
-    proj = Project.from_sb3("all blocks.sb3")
-    proj.add_target(Target.new_sprite("Cat"))
-
-    cat = proj.get_target("Cat")
-    stage = proj.stage
-
-    my_variable = cat.add_variable("my variable", 100)
-    my_list = cat.add_list("my list", [1, 3])
-    my_broadcast = cat.add_broadcast("hello")
-
-    cs = cat.add_block(Block.generic("control_stop"))
-    cs.add_field(Field("STOP_OPTION", "being weird"))
-    cs.add_mutation(Mutation(has_next=False))
-
-    ms = cat.add_block(Block.generic("motion_movesteps"))
-    ms.add_input(Input("STEPS", "10"))
-
-    say = cat.add_block(Block.generic("looks_say"))
-    say.add_input(Input("MESSAGE", "90", "angle", shadow_status=2))
-
-    print(proj.json_str())
-
-    proj.export("test proj")
