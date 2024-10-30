@@ -1406,8 +1406,6 @@ class Procedures:
                 Input(arg, value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
 
-
-
 class Arguments:
     class EditorBoolean(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -1431,3 +1429,54 @@ class Arguments:
         def set_value(self, value: str = "boolean", value_id: str = None):
             return self.add_field(Field("VALUE", value, value_id))
 
+
+class Addons:
+    class IsTurbowarp(Arguments.ReporterBoolean):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(shadow=shadow, pos=pos)
+            self.set_value("is turbowarp?")
+
+    class IsCompiled(Arguments.ReporterBoolean):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(shadow=shadow, pos=pos)
+            self.set_value("is compiled?")
+
+    class IsForkphorus(Arguments.ReporterBoolean):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(shadow=shadow, pos=pos)
+            self.set_value("is forkphorus?")
+
+    class Breakpoint(Procedures.Call):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(shadow=shadow, pos=pos)
+            self.set_proc_code("​​breakpoint​​")
+
+    class Log(Procedures.Call):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(shadow=shadow, pos=pos)
+            self.set_proc_code("​​log​​ %s")
+            self.set_argument_ids("arg0")
+
+        def set_message(self, value='', input_type: str | int = "string", shadow_status: int = 1, *,
+                        input_id: str = None, obscurer: str | Block = None):
+            return self.set_arg("arg0", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer)
+
+    class Warn(Procedures.Call):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(shadow=shadow, pos=pos)
+            self.set_proc_code("​​warn​​ %s")
+            self.set_argument_ids("arg0")
+
+        def set_message(self, value='', input_type: str | int = "string", shadow_status: int = 1, *,
+                        input_id: str = None, obscurer: str | Block = None):
+            return self.set_arg("arg0", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer)
+
+    class Error(Procedures.Call):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(shadow=shadow, pos=pos)
+            self.set_proc_code("​​error​​ %s")
+            self.set_argument_ids("arg0")
+
+        def set_message(self, value='', input_type: str | int = "string", shadow_status: int = 1, *,
+                        input_id: str = None, obscurer: str | Block = None):
+            return self.set_arg("arg0", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer)
