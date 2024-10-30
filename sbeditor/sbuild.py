@@ -1223,7 +1223,7 @@ class Data:
             super().__init__(None, "data_deleteoflist", shadow=shadow, pos=pos)
 
         def set_index(self, value="random", input_type: str | int = "positive integer", shadow_status: int = 1, *,
-                     input_id: str = None, obscurer: str | Block = None):
+                      input_id: str = None, obscurer: str | Block = None):
             return self.add_input(
                 Input("INDEX", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1240,7 +1240,7 @@ class Data:
                 Input("ITEM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
         def set_index(self, value="random", input_type: str | int = "positive integer", shadow_status: int = 1, *,
-                     input_id: str = None, obscurer: str | Block = None):
+                      input_id: str = None, obscurer: str | Block = None):
             return self.add_input(
                 Input("INDEX", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1335,3 +1335,99 @@ class Data:
     class ListIndexRandom(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
             super().__init__(None, "data_listindexrandom", shadow=shadow, pos=pos)
+
+
+class Procedures:
+    class Definition(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "procedures_definition", shadow=shadow, pos=pos)
+
+        def set_custom_block(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
+                             input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("custom_block", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class Call(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "procedures_call", shadow=shadow, pos=pos, mutation=Mutation())
+
+        def set_proc_code(self, proc_code: str = ''):
+            self.mutation.proc_code = proc_code
+            return self
+
+        def set_argument_ids(self, *argument_ids: list[str]):
+            self.mutation.argument_ids = argument_ids
+            return self
+
+        def set_warp(self, warp: bool = True):
+            self.mutation.warp = warp
+            return self
+
+        def set_arg(self, arg, value='', input_type: str | int = "string", shadow_status: int = 1, *,
+                    input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input(arg, value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class Declaration(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "procedures_declaration", shadow=shadow, pos=pos, mutation=Mutation())
+
+        def set_proc_code(self, proc_code: str = ''):
+            self.mutation.proc_code = proc_code
+            return self
+
+    class Prototype(Block):
+        def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "procedures_prototype", shadow=shadow, pos=pos, mutation=Mutation())
+
+        def set_proc_code(self, proc_code: str = ''):
+            self.mutation.proc_code = proc_code
+            return self
+
+        def set_argument_ids(self, *argument_ids: list[str]):
+            self.mutation.argument_ids = argument_ids
+            return self
+
+        def set_argument_names(self, *argument_names: list[str]):
+            self.mutation.argument_names = argument_names
+            return self
+
+        def set_argument_defaults(self, *argument_defaults: list[str]):
+            self.mutation.argument_defaults = argument_defaults
+            return self
+
+        def set_warp(self, warp: bool = True):
+            self.mutation.warp = warp
+            return self
+
+        def set_arg(self, arg, value, input_type: str | int = "block", shadow_status: int = 1, *,
+                    input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input(arg, value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+
+
+
+class Arguments:
+    class EditorBoolean(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "argument_editor_boolean", shadow=shadow, pos=pos, mutation=Mutation())
+
+    class EditorStringNumber(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "argument_editor_string_number", shadow=shadow, pos=pos, mutation=Mutation())
+
+    class ReporterBoolean(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "argument_reporter_boolean", shadow=shadow, pos=pos, mutation=Mutation())
+
+        def set_value(self, value: str = "boolean", value_id: str = None):
+            return self.add_field(Field("VALUE", value, value_id))
+
+    class ReporterStringNumber(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "argument_reporter_string_number", shadow=shadow, pos=pos, mutation=Mutation())
+
+        def set_value(self, value: str = "boolean", value_id: str = None):
+            return self.add_field(Field("VALUE", value, value_id))
+

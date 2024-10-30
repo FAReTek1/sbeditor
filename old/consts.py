@@ -17,6 +17,7 @@ def all_of_the(cls: type, *, with_a: str = None):
 ID_DIGITS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!\"£$%^&*()-_+=[]{}:;'@#~,.?<>/\\|`¬¦"
 ID_BASE = len(ID_DIGITS)
 
+
 class Extensions:
     PEN = \
         {"name": "Pen Extension",
@@ -219,14 +220,17 @@ class Blocks:
                     "listindexrandom": "data_listindexrandom"},
 
            "procedures": {"definition": "procedures_definition",
-                          "call": "procedures_call", # MAKE SURE TO ADD SA DEBUG BLOCKS ASW
+                          "call": "procedures_call",  # MAKE SURE TO ADD SA DEBUG BLOCKS ASW as compiler detectors
                           "declaration": "procedures_declaration",
                           "prototype": "procedures_prototype"},
 
            "argument": {"reporter_string_number": "argument_reporter_string_number",
                         "reporter_boolean": "argument_reporter_boolean",
+
                         "editor_boolean": "argument_editor_boolean",
                         "editor_string_number": "argument_editor_string_number"},
+
+           "addons": {},  # Scratch addons debug blocks
 
            "music": {"playDrumForBeats": "music_playDrumForBeats",
                      "restForBeats": "music_restForBeats",

@@ -1502,7 +1502,7 @@ class Target(ProjectItem):
                                       "argument_reporter_boolean"):
                     for field in block.fields:
                         if field.id == "VALUE":
-                            if field.value not in ("is compiled?", "is turbowarp?"):
+                            if field.value not in ("is compiled?", "is turbowarp?", "is forkphorus?"):
                                 field.value = obfuscate_str(field.value)
                 block.comment_id = None
 
