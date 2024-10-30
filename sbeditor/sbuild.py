@@ -1,4 +1,4 @@
-from .sbeditor import *
+from .sbeditor import Block, Input, Field, Mutation, Target
 
 
 class Motion:
@@ -905,6 +905,242 @@ class Sensing:
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
             super().__init__(None, "sensing_userid", shadow=shadow, pos=pos)
 
+
+class Operators:
+    class Add(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "operator_add", shadow=shadow, pos=pos)
+
+        def set_num1(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
+                     input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("NUM1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+        def set_num2(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
+                     input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("NUM2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class Subtract(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "operator_subtract", shadow=shadow, pos=pos)
+
+        def set_num1(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
+                     input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("NUM1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+        def set_num2(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
+                     input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("NUM2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class Multiply(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "operator_multiply", shadow=shadow, pos=pos)
+
+        def set_num1(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
+                     input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("NUM1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+        def set_num2(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
+                     input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("NUM2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class Divide(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "operator_divide", shadow=shadow, pos=pos)
+
+        def set_num1(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
+                     input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("NUM1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+        def set_num2(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
+                     input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("NUM2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class Random(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "operator_random", shadow=shadow, pos=pos)
+
+        def set_from(self, value="1", input_type: str | int = "number", shadow_status: int = 1, *,
+                     input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("FROM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+        def set_to(self, value="10", input_type: str | int = "number", shadow_status: int = 1, *,
+                   input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("TO", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class GT(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "operator_gt", shadow=shadow, pos=pos)
+
+        def set_operand1(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
+                         input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("OPERAND1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+        def set_operand2(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
+                         input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("OPERAND2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class LT(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "operator_lt", shadow=shadow, pos=pos)
+
+        def set_operand1(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
+                         input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("OPERAND1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+        def set_operand2(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
+                         input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("OPERAND2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class Equals(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "operator_equals", shadow=shadow, pos=pos)
+
+        def set_operand1(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
+                         input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("OPERAND1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+        def set_operand2(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
+                         input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("OPERAND2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class And(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "operator_and", shadow=shadow, pos=pos)
+
+        def set_operand1(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
+                         input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("OPERAND1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+        def set_operand2(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
+                         input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("OPERAND2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class Or(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "operator_or", shadow=shadow, pos=pos)
+
+        def set_operand1(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
+                         input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("OPERAND1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+        def set_operand2(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
+                         input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("OPERAND2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class Not(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "operator_not", shadow=shadow, pos=pos)
+
+        def set_operand(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
+                        input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("OPERAND", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class Join(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "operator_join", shadow=shadow, pos=pos)
+
+        def set_string1(self, value="apple ", input_type: str | int = "string", shadow_status: int = 1, *,
+                        input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("STRING1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+        def set_string2(self, value="banana", input_type: str | int = "string", shadow_status: int = 1, *,
+                        input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("STRING2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class LetterOf(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "operator_letter_of", shadow=shadow, pos=pos)
+
+        def set_letter(self, value="1", input_type: str | int = "positive integer", shadow_status: int = 1, *,
+                       input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("LETTER", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+        def set_string(self, value="apple", input_type: str | int = "string", shadow_status: int = 1, *,
+                       input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("STRING", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class Length(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "operator_length", shadow=shadow, pos=pos)
+
+        def set_string(self, value="apple", input_type: str | int = "string", shadow_status: int = 1, *,
+                       input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("STRING", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class Contains(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "operator_contains", shadow=shadow, pos=pos)
+
+        def set_string1(self, value="apple", input_type: str | int = "string", shadow_status: int = 1, *,
+                        input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("STRING1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+        def set_string2(self, value="a", input_type: str | int = "string", shadow_status: int = 1, *,
+                        input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("STRING2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class Mod(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "operator_mod", shadow=shadow, pos=pos)
+
+        def set_num1(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
+                     input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("NUM1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+        def set_num2(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
+                     input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("NUM2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class Round(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "operator_round", shadow=shadow, pos=pos)
+
+        def set_num(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
+                    input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("NUM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class MathOp(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "operator_mathop", shadow=shadow, pos=pos)
+
+        def set_num(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
+                    input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("NUM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+        def set_operator(self, value: str = "abs", value_id: str = None):
+            return self.add_field(Field("OPERATOR", value, value_id))
 
 
 class Data:

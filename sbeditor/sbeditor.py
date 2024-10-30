@@ -364,6 +364,7 @@ class Input(ProjectItem):
 
         if obscurer is not None:
             shadow_status = 3
+
         elif shadow_status is None:
             shadow_status = 1
 
