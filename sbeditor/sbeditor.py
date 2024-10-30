@@ -109,7 +109,8 @@ EXTENSIONS = {"boost": "LEGO BOOST Extension",
               "text2speech": "Text to Speech Extension",
               "translate": "Translate Extension",
               "videoSensing": "Video Sensing Extension",
-              "wedo2": "LEGO Education WeDo 2.0 Extension"}
+              "wedo2": "LEGO Education WeDo 2.0 Extension",
+              "coreExample": "CoreEx Extension"}
 
 INPUT_CODES = {"null": 1,
                "block": 2,

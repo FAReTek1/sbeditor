@@ -361,6 +361,11 @@ class Blocks:
                       "menu_tiltOptions": "gdxfor_menu_tiltOptions",
                       "menu_axisOptions": "gdxfor_menu_axisOptions"},
 
+           "coreExample": {
+               "exampleOpcode": "coreExample_exampleOpcode",
+               "exampleWithInlineImage": "coreExample_exampleWithInlineImage"
+           },
+
            "": {"note": "note",
                 "matrix": "matrix",
                 # The red hat block is just what scratch displays when you give it an invalid opcode. And you *CAN*
