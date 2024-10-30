@@ -8,8 +8,6 @@ assert '.' in remote_version
 with open('README.md', 'r', encoding="utf-8") as readme:
     long_description = readme.read()
 
-with open("remote version.txt", "w") as remote_version_file:
-    remote_version_file.write(remote_version)
 print(remote_version)
 
 setup(
