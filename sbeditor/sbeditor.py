@@ -13,7 +13,6 @@ from pathlib import Path
 from zipfile import ZipFile
 
 import requests
-from linkcheck.logger.none import NoneLogger
 
 
 class ProjectItem(ABC):
@@ -538,7 +537,7 @@ class Block(ProjectItem):
             self.target = target
 
     @staticmethod
-    def from_input(inp: Input, *, adjust_to_default_pos: bool=True):
+    def from_input(inp: Input, *, adjust_to_default_pos: bool = True):
         if inp.pos is None and adjust_to_default_pos:
             inp.pos = (0, 0)
 
@@ -1433,6 +1432,25 @@ class Target(ProjectItem):
         self.blocks.append(new_block)
 
         return new_block
+
+    def link_chain(self, *_chain: [Block], ret_first: bool = True) -> Block | list[Block]:
+        """
+        Attaches a chain together so that the parent/next attributes are linked to the relevant blocks.
+
+        Useful for chains that are a substack of a C-Mouth, to input the chain's first item while simultaneously linking
+        the chain together without setting variables
+
+        :param ret_first: Whether to return the first block in the chain or the whole chain
+        :param _chain: Blockchain (List/tuple of blocks)
+        :return: The first item of the blockchain if ret_first, else the chain you gave in
+        """
+        self.add_block(_chain[0])
+        _chain[0].attach_chain(
+            _chain[1:]
+        )
+
+        return _chain[0] if ret_first \
+            else _chain
 
     def add_variable(self, name: str, value=0, is_cloud_var: bool = False):
         var_id = self.new_id()

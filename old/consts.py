@@ -219,7 +219,7 @@ class Blocks:
                     "listindexrandom": "data_listindexrandom"},
 
            "procedures": {"definition": "procedures_definition",
-                          "call": "procedures_call",
+                          "call": "procedures_call", # MAKE SURE TO ADD SA DEBUG BLOCKS ASW
                           "declaration": "procedures_declaration",
                           "prototype": "procedures_prototype"},
 
@@ -365,7 +365,7 @@ class Blocks:
                 "matrix": "matrix",
                 # The red hat block is just what scratch displays when you give it an invalid opcode. And you *CAN*
                 # add a comment, but only using JSON hacking, and it will cause the block to become quite buggy. But
-                # the comment will be viewable with Turbowarp, but the connection will not be visible. This is  why
+                # the comment will be viewable with TurboWarp, but the connection will not be visible. This is  why
                 # I added the block as "red_hat_block" so it is more understandable when viewing the JSON.
                 "red_hat_block": "red_hat_block"}}
 
