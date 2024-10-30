@@ -10,3 +10,6 @@ classes to `sbuild.py` so that you don't need to remember/look up block opcodes/
 
 https://en.scratch-wiki.info/wiki/Scratch_File_Format
 https://en.scratch-wiki.info/wiki/List_of_Block_Opcodes
+
+You can install sbeditor using pip:
+`pip install sbeditor`
