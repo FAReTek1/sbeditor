@@ -13,8 +13,6 @@ import subprocess
 with open('README.md', 'r', encoding="utf-8") as readme:
     long_description = readme.read()
 
-# print(remote_version)
-
 setup(
     name='sbeditor',
     version="v0.0.0-beta.6",
