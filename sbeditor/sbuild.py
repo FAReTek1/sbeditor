@@ -703,6 +703,48 @@ class Control:
         def set_clone_option(self, value: str = "_myself_", value_id: str = None):
             return self.add_field(Field("CLONE_OPTION", value, value_id))
 
+    class DeleteThisClone(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "control_delete_this_clone", shadow=shadow, pos=pos, can_next=False)
+
+    class ForEach(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "control_for_each", shadow=shadow, pos=pos)
+
+        def set_substack(self, value, input_type: str | int = "block", shadow_status: int = 2, *,
+                         input_id: str = None):
+            inp = Input("SUBSTACK", value, input_type, shadow_status, input_id=input_id)
+            return self.add_input(inp)
+
+        def set_value(self, value="5", input_type: str | int = "positive integer", shadow_status: int = 1, *,
+                          input_id: str = None):
+            inp = Input("VALUE", value, input_type, shadow_status, input_id=input_id)
+            return self.add_input(inp)
+
+        def set_variable(self, value: str="i", value_id: str = None):
+            return self.add_field(Field("VARIABLE", value, value_id))
+
+    class GetCounter(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "control_get_counter", shadow=shadow, pos=pos)
+
+    class IncrCounter(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "control_incr_counter", shadow=shadow, pos=pos)
+
+    class ClearCounter(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "control_clear_counter", shadow=shadow, pos=pos)
+
+    class AllAtOnce(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "control_all_at_once", shadow=shadow, pos=pos)
+
+        def set_substack(self, value, input_type: str | int = "block", shadow_status: int = 2, *,
+                         input_id: str = None):
+            inp = Input("SUBSTACK", value, input_type, shadow_status, input_id=input_id)
+            return self.add_input(inp)
+
 
 class Sensing:
     class TouchingObjectMenu(Block):
