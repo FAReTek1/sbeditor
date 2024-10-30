@@ -1,0 +1,7 @@
+[project]
+name = "sbeditor"
+version = "0.0.1"
+dependencies = ["requests", "colorama", "setuptools"]
+
+[project.optional-dependencies]
+dev = ["faretek1"]
