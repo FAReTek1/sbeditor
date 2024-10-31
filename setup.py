@@ -1,5 +1,5 @@
 from setuptools import setup
-import subprocess
+# import subprocess
 
 # Copied from https://www.youtube.com/watch?v=U-aIPTS580s
 # ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ WARNING ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
