@@ -1727,12 +1727,19 @@ class Monitor(ProjectItem):
                       x: int | float = 5, y: int | float = 5, visible: bool = False, slider_min: int | float = 0,
                       slider_max: int | float = 100, is_discrete: bool = True):
         if "reporter" not in reporter.stack_type:
-            print(f"Warning: {reporter} is not a reporter block, the monitor will return '0'")
-
+            print(f"Warning: {reporter} is not a reporter block; the monitor will return '0'")
+        elif "(menu)" in reporter.stack_type:
+            print(f"Warning: {reporter} is a menu block; the monitor will return '0'")
+        # Maybe add note that length of list doesn't work fsr?? idk
         if _id is None:
             _id = reporter.opcode.split('_')[-1]
 
         params = {}
+        for field in reporter.fields:
+            if field.value_id is None:
+                params[field.id] = field.value
+            else:
+                params[field.id] = field.value, field.value_id
 
         return Monitor(
             _id,
