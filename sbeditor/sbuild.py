@@ -1598,6 +1598,113 @@ class Pen:
             return self.add_field(Field("colorParam", value, value_id))
 
 
+class Music:
+    class PlayDrumForBeats(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "music_playDrumForBeats", shadow=shadow, pos=pos)
+
+        def set_drum(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
+                     input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("DRUM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+        def set_beats(self, value="0.25", input_type: str | int = "positive number", shadow_status: int = 1, *,
+                      input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("BEATS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class PlayNoteForBeats(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "music_playDrumForBeats", shadow=shadow, pos=pos)
+
+        def set_note(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
+                     input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("NOTE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+        def set_beats(self, value="0.25", input_type: str | int = "positive number", shadow_status: int = 1, *,
+                      input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("BEATS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class RestForBeats(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "music_restForBeats", shadow=shadow, pos=pos)
+
+        def set_beats(self, value="0.25", input_type: str | int = "positive number", shadow_status: int = 1, *,
+                      input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("BEATS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class SetTempo(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "music_setTempo", shadow=shadow, pos=pos)
+
+        def set_beats(self, value="60", input_type: str | int = "positive number", shadow_status: int = 1, *,
+                      input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("TEMPO", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class ChangeTempo(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "music_changeTempo", shadow=shadow, pos=pos)
+
+        def set_beats(self, value="60", input_type: str | int = "positive number", shadow_status: int = 1, *,
+                      input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("TEMPO", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class GetTempo(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "music_getTempo", shadow=shadow, pos=pos)
+
+    class SetInstrument(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "music_setInstrument", shadow=shadow, pos=pos)
+
+        def set_instrument(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
+                           input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("INSTRUMENT", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class MidiPlayDrumForBeats(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "music_midiPlayDrumForBeats", shadow=shadow, pos=pos)
+
+        def set_drum(self, value="123", input_type: str | int = "positive integer", shadow_status: int = 1, *,
+                     input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("DRUM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+        def set_beats(self, value="1", input_type: str | int = "positive number", shadow_status: int = 1, *,
+                      input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("BEATS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class MidiSetInstrument(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "music_midiSetInstrument", shadow=shadow, pos=pos)
+
+        def set_instrument(self, value="6", input_type: str | int = "positive integer", shadow_status: int = 1, *,
+                           input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("INSTRUMENT", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class MenuDrum(Block):
+        def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "music_menu_DRUM", shadow=shadow, pos=pos)
+
+        def set_drum(self, value: str = "1", value_id: str = None):
+            return self.add_field(Field("DRUM", value, value_id))
+
+    class MenuInstrument(Block):
+        def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "music_menu_INSTRUMENT", shadow=shadow, pos=pos)
+
+        def set_instrument(self, value: str = "1", value_id: str = None):
+            return self.add_field(Field("INSTRUMENT", value, value_id))
+
+
 class VideoSensing:
     class WhenMotionGreaterThan(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
