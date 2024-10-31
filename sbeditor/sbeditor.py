@@ -898,7 +898,7 @@ class Asset(ProjectItem):
         if asset_id is None:
             asset_id = file_name.split('.')[0]
         if data_format is None:
-            data_format = '.' + file_name.split('.')[1]
+            data_format = file_name.split('.')[1]
 
         super().__init__(asset_id)
 
@@ -1381,7 +1381,7 @@ class Target(ProjectItem):
 
     @staticmethod
     def new_stage(tts_lang: str = "English"):
-        return Target(is_stage=True, name="Stage", text_to_speech_language=tts_lang)
+        return Target(is_stage=True, name="Stage", text_to_speech_language=tts_lang, layer_order=0)
 
     @staticmethod
     def new_sprite(name: str = "Blank"):
