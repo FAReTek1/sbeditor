@@ -6,6 +6,7 @@ Reference: https://en.scratch-wiki.info/wiki/Scratch_File_Format
 import json
 import math
 import os
+import re
 import shutil
 from abc import ABC, abstractmethod
 from hashlib import md5
@@ -47,8 +48,8 @@ class ProjectItem(ABC):
             fp = f"ProjectItem{self.id}.json"
         data = self.to_json()
 
-        with open(fp, "w", encoding="utf-8") as f:
-            json.dump(data, f)
+        with open(fp, "w", encoding="utf-8") as save_json_file:
+            json.dump(data, save_json_file)
 
 
 def digits_of(base: int):
@@ -959,8 +960,8 @@ class Asset(ProjectItem):
                 with ZipFile(load_path, "r") as achv:
                     content = achv.read(self.file_name)
 
-        with open(fp, "wb") as f:
-            f.write(content)
+        with open(fp, "wb") as asset_file:
+            asset_file.write(content)
 
     @staticmethod
     def load_from_file(fp: str, name: str = None):
@@ -975,8 +976,8 @@ class Asset(ProjectItem):
         if file_ext not in image_types and file_ext not in sound_types:
             raise ValueError(f"Unsupported file type: {file_ext}")
 
-        with open(fp, "rb") as f:
-            md5_hash = md5(f.read()).hexdigest()
+        with open(fp, "rb") as asset_file:
+            md5_hash = md5(asset_file.read()).hexdigest()
 
         md5ext = f"{md5_hash}.{file_ext}"
         asset_json = {
@@ -1296,8 +1297,8 @@ class Target(ProjectItem):
         for asset in self.assets():
             asset.download(f"{fp}\\{asset.id}")
 
-        with open(f"{fp}\\sprite.json", "w", encoding="utf-8") as f:
-            json.dump(self.to_json(), f)
+        with open(f"{fp}\\sprite.json", "w", encoding="utf-8") as sprite_json_file:
+            json.dump(self.to_json(), sprite_json_file)
 
         if not make_zip:
             return
@@ -1578,12 +1579,23 @@ class Extension(ProjectItem):
         return self.id
 
 
+DEFAULT_META_VM = "0.1.0"
+DEFAULT_META_AGENT = "Python: sbeditor.py by https://scratch.mit.edu/users/faretek1/"
+
+
 class Meta(ProjectItem):
-    def __init__(self, semver: str = "3.0.0", vm: str = "", agent: str = "", platform: dict = None):
+    def __init__(self, semver: str = "3.0.0", vm: str = DEFAULT_META_VM, agent: str = DEFAULT_META_AGENT,
+                 platform: dict = None):
         """
         Represents metadata of the project
         https://en.scratch-wiki.info/wiki/Scratch_File_Format#Metadata
         """
+
+        # Thanks to TurboWarp for this pattern ↓↓↓↓, I just copied it
+        if re.match("^([0-9]+\\.[0-9]+\\.[0-9]+)($|-)", vm) is None:
+            raise ValueError(
+                f"\"{vm}\" does not match pattern \"^([0-9]+\\.[0-9]+\\.[0-9]+)($|-)\" - maybe try \"0.0.0\"?")
+
         self.semver = semver
         self.vm = vm
         self.agent = agent
@@ -1613,9 +1625,9 @@ class Meta(ProjectItem):
         platform = data.get("platform")
 
         if EDIT_META or vm is None:
-            vm = "0.1.0"
+            vm = DEFAULT_META_VM
         if EDIT_META or agent is None:
-            agent = "Python: sbeditor.py by https://scratch.mit.edu/users/faretek1/"
+            agent = DEFAULT_META_AGENT
         if META_SET_PLATFORM and (EDIT_META or platform is None):
             platform = {
                 "name": "sbeditor.py",
@@ -1851,7 +1863,7 @@ class Project(ProjectItem):
             assets += target.assets()
         return assets
 
-    def export(self, fp: str, make_zip: bool = True):
+    def export(self, fp: str, make_zip: bool = True, auto_open: bool = False):
         if os.path.isdir(fp):
             try:
                 shutil.rmtree(fp)
@@ -1863,8 +1875,8 @@ class Project(ProjectItem):
         for asset in self.assets():
             asset.download(f"{fp}\\{asset.id}")
 
-        with open(f"{fp}\\project.json", "w", encoding="utf-8") as f:
-            json.dump(self.to_json(), f)
+        with open(f"{fp}\\project.json", "w", encoding="utf-8") as project_json_file:
+            json.dump(self.to_json(), project_json_file)
 
         if not make_zip:
             return
@@ -1872,6 +1884,10 @@ class Project(ProjectItem):
         with ZipFile(f"{fp}.sb3", "w") as achv:
             for file in os.listdir(fp):
                 achv.write(f"{fp}\\{file}", arcname=file)
+
+        if auto_open:
+            # os.system(f"cd {os.getcwd()}")
+            os.system(f"explorer.exe \"{fp}.sb3\"")
 
     def get_target(self, name: str) -> Target | None:
         for target in self.targets:
