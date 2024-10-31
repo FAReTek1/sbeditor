@@ -1616,7 +1616,7 @@ class Meta(ProjectItem):
             vm = "0.1.0"
         if EDIT_META or agent is None:
             agent = "Python: sbeditor.py by https://scratch.mit.edu/users/faretek1/"
-        if META_SET_PLATFORM and EDIT_META or platform is None:
+        if META_SET_PLATFORM and (EDIT_META or platform is None):
             platform = {
                 "name": "sbeditor.py",
                 "url": "https://github.com/FAReTek1/sbeditor"
@@ -1645,6 +1645,8 @@ class Monitor(ProjectItem):
         https://en.scratch-wiki.info/wiki/Scratch_File_Format#Monitors
         """
         super().__init__(_id)
+        if params is None:
+            params = {}
 
         self.mode = mode
 
@@ -1718,6 +1720,34 @@ class Monitor(ProjectItem):
             _json["isDiscrete"] = self.is_discrete
 
         return _json
+
+    @staticmethod
+    def from_reporter(reporter: Block, _id: str = None, mode: str = "default",
+                      sprite_name: str = None, value=0, width: int | float = 0, height: int | float = 0,
+                      x: int | float = 5, y: int | float = 5, visible: bool = False, slider_min: int | float = 0,
+                      slider_max: int | float = 100, is_discrete: bool = True):
+        if "reporter" not in reporter.stack_type:
+            print(f"Warning: {reporter} is not a reporter block, the monitor will return '0'")
+
+        if _id is None:
+            _id = reporter.opcode.split('_')[-1]
+
+        params = {}
+
+        return Monitor(
+            _id,
+            mode,
+            reporter.opcode,
+
+            params,
+            sprite_name,
+            value,
+
+            width, height,
+            x, y,
+            visible,
+            slider_min, slider_max, is_discrete
+        )
 
 
 class Project(ProjectItem):
@@ -1854,3 +1884,7 @@ class Project(ProjectItem):
     def obfuscate(self, del_comments: bool = True, hide_all_blocks: bool = True):
         for target in self.targets:
             target.obfuscate(del_comments, hide_all_blocks)
+
+    def add_monitor(self, monitor: Monitor) -> Monitor:
+        self.monitors.append(monitor)
+        return Monitor
