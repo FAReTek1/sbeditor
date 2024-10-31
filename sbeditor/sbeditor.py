@@ -126,6 +126,9 @@ INPUT_CODES = {"null": 1,
                "var": 12,
                "list": 13}
 
+with open(f"{os.path.dirname(os.path.realpath(__file__))}\\stack types.json", "r") as f:
+    STACK_TYPES = json.load(f)
+
 EDIT_META = True
 META_SET_PLATFORM = False
 
@@ -352,7 +355,6 @@ class Input(ProjectItem):
 
         if isinstance(value, Broadcast) or isinstance(value, Variable) or isinstance(value, List):
             input_type = type(value).__name__.lower()
-            # print(f"Setting type to {input_type}")
 
             value, input_id = value.name, value.id
 
@@ -480,7 +482,7 @@ class Block(ProjectItem):
                  fields: list[Field] = None, shadow: bool = False, pos: tuple[float | int, float | int] = None,
                  comment: str = None, mutation: Mutation = None,
 
-                 *, array: list = None, target=None, can_next: bool = True, stack_type: str="not set"):
+                 *, array: list = None, target=None, can_next: bool = True):
         """
         A block. This can be a normal block, a shadow block or an array-type block (in json)
         https://en.scratch-wiki.info/wiki/Scratch_File_Format#Blocks
@@ -535,10 +537,16 @@ class Block(ProjectItem):
 
             self.base_can_next = can_next
 
-            self.stack_type = stack_type
-
             target: Target
             self.target = target
+
+    @property
+    def stack_type(self):
+        _stack_type = STACK_TYPES.get(self.opcode)
+        if _stack_type == '':
+            _stack_type = None
+
+        return _stack_type
 
     @staticmethod
     def from_input(inp: Input, *, adjust_to_default_pos: bool = True):
@@ -592,7 +600,7 @@ class Block(ProjectItem):
             "topLevel": self.parent is None,
         }
 
-        if not self.can_next:
+        if not self.can_next and self.next is not None:
             print(self, "can't next:", self.__dict__)
 
             ret["next"] = None
