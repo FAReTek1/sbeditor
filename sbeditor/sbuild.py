@@ -1144,7 +1144,7 @@ class Operators:
 
 
 class Data:
-    class Variable(Block):
+    class VariableArr(Block):
         def __init__(self, value, input_type: str | int = "variable", shadow_status: int = None, *,
                      pos: tuple[int | float, int | float] = (0, 0)):
             inp = Input(None, value, input_type, shadow_status)
@@ -1154,7 +1154,13 @@ class Data:
                 arr = inp.to_json()[1][-1]
 
             super().__init__(array=arr, pos=pos)
-            self.opcode = "data_variable"
+
+    class Variable(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "data_variable", shadow=shadow, pos=pos)
+
+        def set_variable(self, value: str | Variable = "variable", value_id: str = None):
+            return self.add_field(Field("VARIABLE", value, value_id))
 
     class SetVariableTo(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -1194,7 +1200,7 @@ class Data:
         def set_variable(self, value: str | Variable = "variable", value_id: str = None):
             return self.add_field(Field("VARIABLE", value, value_id))
 
-    class ListContents(Block):
+    class ListArr(Block):
         def __init__(self, value, input_type: str | int = "list", shadow_status: int = None, *,
                      pos: tuple[int | float, int | float] = (0, 0)):
             inp = Input(None, value, input_type, shadow_status)
@@ -1204,7 +1210,13 @@ class Data:
                 arr = inp.to_json()[1][-1]
 
             super().__init__(array=arr, pos=pos)
-            self.opcode = "data_listcontents"
+
+    class ListContents(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "data_listcontents", shadow=shadow, pos=pos)
+
+        def set_list(self, value: str | List = "my list", value_id: str = None):
+            return self.add_field(Field("LIST", value, value_id))
 
     class AddToList(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
