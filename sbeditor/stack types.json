@@ -165,8 +165,8 @@
 	"procedures_prototype": "stack",
 
 	"argument_reporter_string_number": "reporter",
-	"argument_reporter_reporter (boolean)": "reporter (boolean)",
-	"argument_editor_reporter (boolean)": "reporter (boolean)",
+	"argument_reporter_boolean": "reporter (boolean)",
+	"argument_editor_reporter": "reporter (boolean)",
 	"argument_editor_string_number": "reporter",
 
 
