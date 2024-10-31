@@ -15,12 +15,13 @@ with open('README.md', 'r', encoding="utf-8") as readme:
 
 setup(
     name='sbeditor',
-    version="v0.0.3",
+    version="v0.0.3.1",
     packages=['sbeditor'],
     url='https://github.com/FAReTek1/sbeditor',
     license='MIT',
     author='faretek1',
     author_email='',
     description='A parser for all things sb3',
-    long_description=long_description
+    long_description=long_description,
+    long_description_content_type="text/markdown"
 )
