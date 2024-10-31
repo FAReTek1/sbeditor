@@ -1149,9 +1149,9 @@ class Data:
                      pos: tuple[int | float, int | float] = (0, 0)):
             inp = Input(None, value, input_type, shadow_status)
             if inp.type_str == "block":
-                arr = inp.to_json()[0]
+                arr = inp.json()[0]
             else:
-                arr = inp.to_json()[1][-1]
+                arr = inp.json()[1][-1]
 
             super().__init__(array=arr, pos=pos)
 
@@ -1205,9 +1205,9 @@ class Data:
                      pos: tuple[int | float, int | float] = (0, 0)):
             inp = Input(None, value, input_type, shadow_status)
             if inp.type_str == "block":
-                arr = inp.to_json()[0]
+                arr = inp.json()[0]
             else:
-                arr = inp.to_json()[1][-1]
+                arr = inp.json()[1][-1]
 
             super().__init__(array=arr, pos=pos)
 

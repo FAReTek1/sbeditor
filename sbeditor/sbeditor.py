@@ -35,19 +35,19 @@ class ProjectItem(ABC):
 
     @abstractmethod
     @property
-    def to_json(self) -> tuple[dict | list, str | None] | dict:
+    def json(self) -> tuple[dict | list, str | None] | dict:
         pass
 
     def __repr__(self):
         return f"ProjectItem<{self.id}>"
 
     def json_str(self):
-        return json.dumps(self.to_json)
+        return json.dumps(self.json)
 
     def save_json(self, fp: str = None):
         if fp is None:
             fp = f"ProjectItem{self.id}.json"
-        data = self.to_json
+        data = self.json
 
         with open(fp, "w", encoding="utf-8") as save_json_file:
             json.dump(data, save_json_file)
@@ -168,7 +168,7 @@ class Variable(ProjectItem):
         return Variable(name, value, is_cloud_var, var_id=_id)
 
     @property
-    def to_json(self) -> tuple[dict | list, str | None]:
+    def json(self) -> tuple[dict | list, str | None]:
         if self.is_cloud_var:
             return [self.name, self.value, True], self.id
 
@@ -194,7 +194,7 @@ class List(ProjectItem):
         return List(data[0], data[1], _id)
 
     @property
-    def to_json(self):
+    def json(self):
         return self.id, [self.name, self.value]
 
 
@@ -211,7 +211,7 @@ class Broadcast(ProjectItem):
         return f"Broadcast<{self.name}>"
 
     @property
-    def to_json(self):
+    def json(self):
         return self.id, self.name
 
     @staticmethod
@@ -319,7 +319,7 @@ class Mutation(ProjectItem):
         return f"Mutation<{self.id}>"
 
     @property
-    def to_json(self):
+    def json(self):
         ret = {
             "tagName": self.tag_name,
             "children": self.children,
@@ -353,7 +353,7 @@ class Input(ProjectItem):
             if obscurer.type == "Normal":
                 obscurer = obscurer.id
             else:
-                obscurer = obscurer.to_json[1]
+                obscurer = obscurer.json[1]
 
         if isinstance(value, Block):
             value = value.id
@@ -431,7 +431,7 @@ class Input(ProjectItem):
             return Input(_id, data[1], "block", shadow_status=shadow_idx, obscurer=obscurer)
 
     @property
-    def to_json(self):
+    def json(self):
         value = self.value
         if self.type_str == "block":
             # If it's a block id, then the value is not an array, just a block id
@@ -469,7 +469,7 @@ class Field(ProjectItem):
         return f"Field<{self.id}>"
 
     @property
-    def to_json(self):
+    def json(self):
         if self.value_id is not None:
             return self.id, [self.value, self.value_id]
 
@@ -562,9 +562,9 @@ class Block(ProjectItem):
             inp.pos = (0, 0)
 
         if inp.type_str == "block":
-            return inp.to_json[0]
+            return inp.json[0]
 
-        return Block(array=inp.to_json[1][-1])
+        return Block(array=inp.json[1][-1])
 
     @property
     def can_next(self):
@@ -582,7 +582,7 @@ class Block(ProjectItem):
             return f"Block<{self.type}, no id>"
 
     @property
-    def to_json(self) -> tuple | list:
+    def json(self) -> tuple | list:
         if self.type != "Normal":
             _json = [self.type_id]
 
@@ -623,20 +623,20 @@ class Block(ProjectItem):
 
         inputs = {}
         for input_ in self.inputs:
-            input_json = input_.to_json
+            input_json = input_.json
             inputs[input_json[0]] = input_json[1]
         ret["inputs"] = inputs
 
         fields = {}
         for field in self.fields:
-            field_json = field.to_json
+            field_json = field.json
 
             fields[field_json[0]] = field_json[1]
         ret["fields"] = fields
 
         if hasattr(self, "mutation"):
             if self.mutation is not None:
-                ret["mutation"] = self.mutation.to_json
+                ret["mutation"] = self.mutation.json
 
         return self.id, ret
 
@@ -898,7 +898,7 @@ class Comment(ProjectItem):
         return f"Comment<{self.block_id} @({self.x}, {self.y})>"
 
     @property
-    def to_json(self):
+    def json(self):
         return self.id, {
             "blockId": self.block_id,
 
@@ -962,7 +962,7 @@ class Asset(ProjectItem):
         return Asset(_id, name, file_name, data_format)
 
     @property
-    def to_json(self):
+    def json(self):
         return {
             "name": self.name,
 
@@ -1084,8 +1084,8 @@ class Costume(Asset):
         return Costume(_id, name, file_name, data_format, bitmap_resolution, rotation_center_x, rotation_center_y)
 
     @property
-    def to_json(self):
-        _json = super().to_json
+    def json(self):
+        _json = super().json
         if self.bitmap_resolution is not None:
             _json["bitmapResolution"] = self.bitmap_resolution
 
@@ -1142,8 +1142,8 @@ class Sound(Asset):
         return Sound(_id, name, file_name, data_format, rate, sample_count)
 
     @property
-    def to_json(self):
-        _json = super().to_json
+    def json(self):
+        _json = super().json
         if self.rate is not None:
             _json["rate"] = self.rate
 
@@ -1345,7 +1345,7 @@ class Target(ProjectItem):
             asset.download(f"{fp}\\{asset.id}")
 
         with open(f"{fp}\\sprite.json", "w", encoding="utf-8") as sprite_json_file:
-            json.dump(self.to_json, sprite_json_file)
+            json.dump(self.json, sprite_json_file)
 
         if not make_zip:
             return
@@ -1355,7 +1355,7 @@ class Target(ProjectItem):
                 achv.write(f"{fp}\\{file}", arcname=file)
 
     @property
-    def to_json(self):
+    def json(self):
         _json = {
             "isStage": self.is_stage,
             "name": self.name,
@@ -1382,42 +1382,42 @@ class Target(ProjectItem):
 
         variables = {}
         for variable in self.variables:
-            var_json = variable.to_json
+            var_json = variable.json
             variables[var_json[1]] = var_json[0]
         _json["variables"] = variables
 
         lists = {}
         for list_ in self.lists:
-            list_json = list_.to_json
+            list_json = list_.json
             lists[list_json[0]] = list_json[1]
         _json["lists"] = lists
 
         broadcasts = {}
         for broadcast in self.broadcasts:
-            broadcast_json = broadcast.to_json
+            broadcast_json = broadcast.json
             broadcasts[broadcast_json[0]] = broadcast_json[1]
         _json["broadcasts"] = broadcasts
 
         blocks = {}
         for block in self.blocks:
-            block_json = block.to_json
+            block_json = block.json
             blocks[block_json[0]] = block_json[1]
         _json["blocks"] = blocks
 
         comments = {}
         for comment in self.comments:
-            comment_json = comment.to_json
+            comment_json = comment.json
             comments[comment_json[0]] = comment_json[1]
         _json["comments"] = comments
 
         costumes = []
         for costume in self.costumes:
-            costumes.append(costume.to_json)
+            costumes.append(costume.json)
         _json["costumes"] = costumes
 
         sounds = []
         for sound in self.sounds:
-            sounds.append(sound.to_json)
+            sounds.append(sound.json)
         _json["sounds"] = sounds
 
         return _json
@@ -1624,7 +1624,7 @@ class Extension(ProjectItem):
         return Extension(data)
 
     @property
-    def to_json(self):
+    def json(self):
         return self.id
 
 
@@ -1656,7 +1656,7 @@ class Meta(ProjectItem):
         return f"Meta<{self.semver} : {self.vm} : {self.agent}>"
 
     @property
-    def to_json(self):
+    def json(self):
         _json = {
             "semver": self.semver,
             "vm": self.vm,
@@ -1757,7 +1757,7 @@ class Monitor(ProjectItem):
                        slider_max, is_discrete)
 
     @property
-    def to_json(self):
+    def json(self):
         _json = {
             "id": self.id,
             "mode": self.mode,
@@ -1888,23 +1888,23 @@ class Project(ProjectItem):
             requests.get(f"https://projects.scratch.mit.edu/{project_id}?token={project_token}").json(), project_id)
 
     @property
-    def to_json(self):
+    def json(self):
         _json = {
-            "meta": self.meta.to_json
+            "meta": self.meta.json
         }
         extensions = []
         for extension in self.extensions:
-            extensions.append(extension.to_json)
+            extensions.append(extension.json)
         _json["extensions"] = extensions
 
         monitors = []
         for monitor in self.monitors:
-            monitors.append(monitor.to_json)
+            monitors.append(monitor.json)
         _json["monitors"] = monitors
 
         targets = []
         for target in self.targets:
-            targets.append(target.to_json)
+            targets.append(target.json)
         _json["targets"] = targets
 
         return _json
@@ -1928,7 +1928,7 @@ class Project(ProjectItem):
             asset.download(f"{fp}\\{asset.id}")
 
         with open(f"{fp}\\project.json", "w", encoding="utf-8") as project_json_file:
-            json.dump(self.to_json, project_json_file)
+            json.dump(self.json, project_json_file)
 
         if not make_zip:
             return
