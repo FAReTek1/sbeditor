@@ -1598,6 +1598,69 @@ class Pen:
             return self.add_field(Field("colorParam", value, value_id))
 
 
+class VideoSensing:
+    class WhenMotionGreaterThan(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "videoSensing_whenMotionGreaterThan", shadow=shadow, pos=pos)
+
+        def set_reference(self, value="10", input_type: str | int = "number", shadow_status: int = 1, *,
+                          input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("REFERENCE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class VideoOn(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "videoSensing_videoOn", shadow=shadow, pos=pos)
+
+        def set_attribute(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
+                          input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("ATTRIBUTE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+        def set_subject(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
+                        input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("SUBJECT", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class MenuAttribute(Block):
+        def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "videoSensing_menu_ATTRIBUTE", shadow=shadow, pos=pos)
+
+        def set_attribute(self, value: str = "motion", value_id: str = None):
+            return self.add_field(Field("ATTRIBUTE", value, value_id))
+
+    class MenuSubject(Block):
+        def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "videoSensing_menu_SUBJECT", shadow=shadow, pos=pos)
+
+        def set_subject(self, value: str = "this sprite", value_id: str = None):
+            return self.add_field(Field("SUBJECT", value, value_id))
+
+    class VideoToggle(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "videoSensing_videoToggle", shadow=shadow, pos=pos)
+
+        def set_video_state(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
+                            input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("VIDEO_STATE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class MenuVideoState(Block):
+        def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "videoSensing_menu_VIDEO_STATE", shadow=shadow, pos=pos)
+
+        def set_video_state(self, value: str = "on", value_id: str = None):
+            return self.add_field(Field("VIDEO_STATE", value, value_id))
+
+    class SetVideoTransparency(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "videoSensing_setVideoTransparency", shadow=shadow, pos=pos)
+
+        def set_transparency(self, value: str="50", input_type: str | int = "number", shadow_status: int = 1, *,
+                  input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(Input("TRANSPARENCY", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+
 class OtherBlocks:
     class Note(Block):
         def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
