@@ -33,8 +33,8 @@ class ProjectItem(ABC):
     def from_json(data, _id: str = None):
         pass
 
-    @abstractmethod
     @property
+    @abstractmethod
     def json(self) -> tuple[dict | list, str | None] | dict:
         pass
 
