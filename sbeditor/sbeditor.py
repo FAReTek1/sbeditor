@@ -127,6 +127,7 @@ INPUT_CODES = {"null": 1,
                "list": 13}
 
 EDIT_META = True
+META_SET_PLATFORM = False
 
 
 def obfuscate_str(string: str):
@@ -1600,7 +1601,7 @@ class Meta(ProjectItem):
             vm = "0.1.0"
         if EDIT_META or agent is None:
             agent = "Python: sbeditor.py by https://scratch.mit.edu/users/faretek1/"
-        if EDIT_META or platform is None:
+        if META_SET_PLATFORM and EDIT_META or platform is None:
             platform = {
                 "name": "sbeditor.py",
                 "url": "https://github.com/FAReTek1/sbeditor"
