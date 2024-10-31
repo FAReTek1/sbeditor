@@ -480,7 +480,7 @@ class Block(ProjectItem):
                  fields: list[Field] = None, shadow: bool = False, pos: tuple[float | int, float | int] = None,
                  comment: str = None, mutation: Mutation = None,
 
-                 *, array: list = None, target=None, can_next: bool = True):
+                 *, array: list = None, target=None, can_next: bool = True, stack_type: str="not set"):
         """
         A block. This can be a normal block, a shadow block or an array-type block (in json)
         https://en.scratch-wiki.info/wiki/Scratch_File_Format#Blocks
@@ -534,6 +534,8 @@ class Block(ProjectItem):
             self.comment_id = comment
 
             self.base_can_next = can_next
+
+            self.stack_type = stack_type
 
             target: Target
             self.target = target
@@ -1477,7 +1479,7 @@ class Target(ProjectItem):
         self.broadcasts.append(broadcast)
         return broadcast
 
-    def obfuscate(self, del_comments: bool = True):
+    def obfuscate(self, del_comments: bool = True, hide_all_blocks: bool = True):
         for variable in self.variables:
             variable.name = obfuscate_str(variable.name)
 
@@ -1486,6 +1488,12 @@ class Target(ProjectItem):
 
         for block in self.blocks:
             if block.type == "Normal":
+                if hide_all_blocks:
+                    # You can only set normal blocks to shadow blocks
+                    # Variable/list reporters are not normal, and do not have a shadow attribute.
+                    # If you use them as an input, they do get a shadow index, however
+                    block.is_shadow = True
+
                 if block.opcode == "procedures_prototype":
                     block.mutation.obfuscate_proc_code()
                     block.mutation.obfuscate_argument_names()
@@ -1506,7 +1514,6 @@ class Target(ProjectItem):
                             if field.value not in ("is compiled?", "is turbowarp?", "is forkphorus?"):
                                 field.value = obfuscate_str(field.value)
                 block.comment_id = None
-
         if del_comments:
             new_comments = []
             for i, comment in enumerate(self.comments):
@@ -1564,7 +1571,7 @@ class Extension(ProjectItem):
 
 
 class Meta(ProjectItem):
-    def __init__(self, semver: str = "3.0.0", vm: str = "", agent: str = "", platform: dict=None):
+    def __init__(self, semver: str = "3.0.0", vm: str = "", agent: str = "", platform: dict = None):
         """
         Represents metadata of the project
         https://en.scratch-wiki.info/wiki/Scratch_File_Format#Metadata
@@ -1836,6 +1843,6 @@ class Project(ProjectItem):
             if target.is_stage:
                 return target
 
-    def obfuscate(self):
+    def obfuscate(self, del_comments: bool = True, hide_all_blocks: bool = True):
         for target in self.targets:
-            target.obfuscate()
+            target.obfuscate(del_comments, hide_all_blocks)

@@ -1389,7 +1389,7 @@ class Procedures:
             return self
 
         def set_argument_names(self, *argument_names: list[str]):
-            self.mutation.argument_names = argument_names
+            self.mutation.argument_names = list(argument_names)
             return self
 
         def set_argument_defaults(self, *argument_defaults: list[str]):
@@ -1738,7 +1738,7 @@ class MakeyMakey:
             super().__init__(None, "makeymakey_whenMakeyKeyPressed", shadow=shadow, pos=pos)
 
         def set_key(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
-                            input_id: str = None, obscurer: str | Block = None):
+                    input_id: str = None, obscurer: str | Block = None):
             return self.add_input(
                 Input("KEY", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1754,7 +1754,7 @@ class MakeyMakey:
             super().__init__(None, "makeymakey_whenCodePressed", shadow=shadow, pos=pos)
 
         def set_sequence(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
-                            input_id: str = None, obscurer: str | Block = None):
+                         input_id: str = None, obscurer: str | Block = None):
             return self.add_input(
                 Input("SEQUENCE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1765,6 +1765,15 @@ class MakeyMakey:
         def set_key(self, value: str = "LEFT UP RIGHT", value_id: str = None):
             return self.add_field(Field("SEQUENCE", value, value_id))
 
+
+class CoreExample:
+    class ExampleOpcode(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "coreExample_exampleOpcode", shadow=shadow, pos=pos)
+
+    class ExampleWithInlineImage(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "coreExample_exampleWithInlineImage", shadow=shadow, pos=pos)
 
 
 class OtherBlocks:
@@ -1787,10 +1796,10 @@ class OtherBlocks:
             # Note: There is no single opcode for the red hat block as the block is simply the result of an error
             # The opcode here has been set to 'redhatblock' to make it obvious what is going on
 
-            # (It's not called red_hat_block because then TurboWarp thinks that # it's supposed to find an extension
+            # (It's not called red_hat_block because then TurboWarp thinks that it's supposed to find an extension
             # called red)
 
             # Appendix: You **CAN** actually add comments to this block, however it will make the block misbehave in the
-            # editor. The the link between the comment and the block will not be visible, but will be visible with the
+            # editor. The link between the comment and the block will not be visible, but will be visible with the
             # corresponding TurboWarp addon
-            super().__init__(None, "redhatblock", shadow=shadow, pos=pos)
+            super().__init__(None, "redhatblock", shadow=shadow, pos=pos, can_next=False)
