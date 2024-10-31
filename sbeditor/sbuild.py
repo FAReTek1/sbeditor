@@ -1732,6 +1732,41 @@ class Translate:
             super().__init__(None, "translate_getViewerLanguage", shadow=shadow, pos=pos)
 
 
+class MakeyMakey:
+    class WhenMakeyKeyPressed(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "makeymakey_whenMakeyKeyPressed", shadow=shadow, pos=pos)
+
+        def set_key(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
+                            input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("KEY", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class MenuKey(Block):
+        def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "makeymakey_menu_KEY", shadow=shadow, pos=pos)
+
+        def set_key(self, value: str = "SPACE", value_id: str = None):
+            return self.add_field(Field("KEY", value, value_id))
+
+    class WhenCodePressed(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "makeymakey_whenCodePressed", shadow=shadow, pos=pos)
+
+        def set_sequence(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
+                            input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("SEQUENCE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class MenuSequence(Block):
+        def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "makeymakey_menu_SEQUENCE", shadow=shadow, pos=pos)
+
+        def set_key(self, value: str = "LEFT UP RIGHT", value_id: str = None):
+            return self.add_field(Field("SEQUENCE", value, value_id))
+
+
+
 class OtherBlocks:
     class Note(Block):
         def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
