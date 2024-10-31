@@ -1656,26 +1656,30 @@ class VideoSensing:
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
             super().__init__(None, "videoSensing_setVideoTransparency", shadow=shadow, pos=pos)
 
-        def set_transparency(self, value: str="50", input_type: str | int = "number", shadow_status: int = 1, *,
-                  input_id: str = None, obscurer: str | Block = None):
-            return self.add_input(Input("TRANSPARENCY", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+        def set_transparency(self, value: str = "50", input_type: str | int = "number", shadow_status: int = 1, *,
+                             input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("TRANSPARENCY", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
 
 class Text2Speech:
     class SpeakAndWait(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
             super().__init__(None, "text2speech_speakAndWait", shadow=shadow, pos=pos)
 
-        def set_words(self, value: str="50", input_type: str | int = "number", shadow_status: int = 1, *,
-                  input_id: str = None, obscurer: str | Block = None):
-            return self.add_input(Input("WORDS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+        def set_words(self, value: str = "50", input_type: str | int = "number", shadow_status: int = 1, *,
+                      input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("WORDS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
     class SetVoice(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
             super().__init__(None, "text2speech_setVoice", shadow=shadow, pos=pos)
 
         def set_voice(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
-                   input_id: str = None, obscurer: str | Block = None):
-            return self.add_input(Input("VOICE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                      input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("VOICE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
     class MenuVoices(Block):
         def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
@@ -1689,8 +1693,9 @@ class Text2Speech:
             super().__init__(None, "text2speech_setLanguage", shadow=shadow, pos=pos)
 
         def set_language(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
-                   input_id: str = None, obscurer: str | Block = None):
-            return self.add_input(Input("LANGUAGE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                         input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("LANGUAGE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
     class MenuLanguages(Block):
         def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
@@ -1699,6 +1704,32 @@ class Text2Speech:
         def set_languages(self, value: str = "en", value_id: str = None):
             return self.add_field(Field("languages", value, value_id))
 
+
+class Translate:
+    class GetTranslate(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "translate_getTranslate", shadow=shadow, pos=pos)
+
+        def set_words(self, value="hello!", input_type: str | int = "string", shadow_status: int = 1, *,
+                      input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("WORDS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+        def set_language(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
+                         input_id: str = None, obscurer: str | Block = None):
+            return self.add_input(
+                Input("LANGUAGE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+
+    class MenuLanguages(Block):
+        def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "translate_menu_languages", shadow=shadow, pos=pos)
+
+        def set_languages(self, value: str = "sv", value_id: str = None):
+            return self.add_field(Field("languages", value, value_id))
+
+    class GetViewerLanguage(Block):
+        def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
+            super().__init__(None, "translate_getViewerLanguage", shadow=shadow, pos=pos)
 
 
 class OtherBlocks:
