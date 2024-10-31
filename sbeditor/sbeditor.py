@@ -16,6 +16,10 @@ from zipfile import ZipFile
 import requests
 
 
+class InvalidProjectError(Exception):
+    pass
+
+
 class ProjectItem(ABC):
     """
     Abstract base class with:
@@ -1884,8 +1888,14 @@ class Project(ProjectItem):
     @staticmethod
     def from_id(project_id: int):
         project_token = requests.get(f"https://api.scratch.mit.edu/projects/{project_id}").json()["project_token"]
-        return Project.from_json(
-            requests.get(f"https://projects.scratch.mit.edu/{project_id}?token={project_token}").json(), project_id)
+        response = requests.get(f"https://projects.scratch.mit.edu/{project_id}?token={project_token}")
+        try:
+            return Project.from_json(
+                response.json(), project_id)
+
+        except json.JSONDecodeError:
+            raise InvalidProjectError(
+                f"Project {project_id} does not seem to contain any JSON. Response text: {response.text}")
 
     @property
     def json(self):
