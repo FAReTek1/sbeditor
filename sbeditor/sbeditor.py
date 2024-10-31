@@ -886,15 +886,20 @@ class Comment(ProjectItem):
 
 
 class Asset(ProjectItem):
-    def __init__(self, asset_id: str,
-                 name: str = "b7853f557e4426412e64bb3da6531a99",
+    def __init__(self, asset_id: str=None,
+                 name: str = "Cat",
                  file_name: str = "b7853f557e4426412e64bb3da6531a99.svg",
-                 data_format: str = "svg",
+                 data_format: str = None,
                  load_method: str = "url"):
         """
         Represents a generic asset. Can be a sound or an image.
         https://en.scratch-wiki.info/wiki/Scratch_File_Format#Assets
         """
+        if asset_id is None:
+            asset_id = file_name.split('.')[0]
+        if data_format is None:
+            data_format = '.' + file_name.split('.')[1]
+
         super().__init__(asset_id)
 
         self.name = name
@@ -1001,10 +1006,10 @@ class Asset(ProjectItem):
 
 
 class Costume(Asset):
-    def __init__(self, _id: str = "b7853f557e4426412e64bb3da6531a99",
+    def __init__(self, _id: str = None,
                  name: str = "Cat",
                  file_name: str = "b7853f557e4426412e64bb3da6531a99.svg",
-                 data_format: str = "svg",
+                 data_format: str = None,
 
                  bitmap_resolution=None,
                  rotation_center_x: int | float = 0,
@@ -1062,10 +1067,10 @@ class Costume(Asset):
 
 
 class Sound(Asset):
-    def __init__(self, _id: str = "83a9787d4cb6f3b7632b4ddfebf74367",
+    def __init__(self, _id: str = None,
                  name: str = "pop",
                  file_name: str = "83a9787d4cb6f3b7632b4ddfebf74367.wav",
-                 data_format: str = "wav",
+                 data_format: str = None,
 
                  rate: int = None,
                  sample_count: int = None):
@@ -1897,6 +1902,7 @@ class Project(ProjectItem):
     def add_target(self, target: Target):
         target.project = self
         self.targets.append(target)
+        return target
 
     @property
     def stage(self):
