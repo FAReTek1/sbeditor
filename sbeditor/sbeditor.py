@@ -18,6 +18,7 @@ import requests
 CURRENT_TARGET: 'Target'
 CURRENT_TARGET = None
 
+
 def set_current_target(target: 'Target'):
     global CURRENT_TARGET
     CURRENT_TARGET = target
