@@ -25,6 +25,10 @@ def set_current_target(target: 'Target'):
     return target
 
 
+def link_chain(*_chain: ['Block'], ret_first: bool = True):
+    CURRENT_TARGET.link_chain(*_chain, ret_first=ret_first)
+
+
 class InvalidProjectError(Exception):
     pass
 
@@ -497,6 +501,14 @@ class Field(ProjectItem):
         return Field(_id, data[0], value_id)
 
 
+class Action:
+    def run(self, target: 'Target', block: 'Block'):
+        pass
+
+
+
+
+
 class Block(ProjectItem):
     def __init__(self, block_id: str | None = None,
                  opcode: str = None, next_block: str = None, parent_block: str = None, inputs: list[Input] = None,
@@ -792,6 +804,12 @@ class Block(ProjectItem):
         return chain
 
     def attach(self, block: 'Block'):
+        if not isinstance(block, Block):
+            print(f"Not a block: {block}")
+            block.run(self.target, self)
+
+            return self
+
         block.target = self.target
 
         self.target.add_block(block)
@@ -824,7 +842,7 @@ class Block(ProjectItem):
         b = self
         for block in chain:
             b = b.attach(block)
-            block.link_inputs()
+            b.link_inputs()
 
     @property
     def previous_chain(self):
@@ -1540,7 +1558,16 @@ class Target(ProjectItem):
 
         return var
 
+    def get_list_by_name(self, name: str):
+        for list_ in self.lists:
+            if list_.name == name:
+                return list_
+
     def add_list(self, name: str, value: list = None):
+        possible_list = self.get_list_by_name(name)
+        if possible_list is not None:
+            return possible_list
+
         if value is None:
             value = []
 
