@@ -1517,8 +1517,11 @@ class Target(ProjectItem):
         return _chain[0] if ret_first \
             else _chain
 
-    def add_variable(self, name: str, value=0, is_cloud_var: bool = False):
-        var_id = self.new_id()
+    def add_variable(self, name: str, value=0, is_cloud_var: bool = False, _id: str=None):
+        if _id is None:
+            var_id = self.new_id()
+        else:
+            var_id = _id
         var = Variable(name, value, is_cloud_var, var_id)
         self.variables.append(var)
 
@@ -1790,18 +1793,21 @@ class Monitor(ProjectItem):
 
     @staticmethod
     def from_reporter(reporter: Block, _id: str = None, mode: str = "default",
-                      sprite_name: str = None, value=0, width: int | float = 0, height: int | float = 0,
+                      opcode:str=None, sprite_name: str = None, value=0, width: int | float = 0, height: int | float = 0,
                       x: int | float = 5, y: int | float = 5, visible: bool = False, slider_min: int | float = 0,
-                      slider_max: int | float = 100, is_discrete: bool = True):
+                      slider_max: int | float = 100, is_discrete: bool = True, params: dict=None):
         if "reporter" not in reporter.stack_type:
             print(f"Warning: {reporter} is not a reporter block; the monitor will return '0'")
         elif "(menu)" in reporter.stack_type:
             print(f"Warning: {reporter} is a menu block; the monitor will return '0'")
         # Maybe add note that length of list doesn't work fsr?? idk
         if _id is None:
-            _id = reporter.opcode.split('_')[-1]
+            _id = reporter.opcode
+        if opcode is None:
+            opcode = reporter.opcode.replace('_', ' ')
 
-        params = {}
+        if params is None:
+            params = {}
         for field in reporter.fields:
             if field.value_id is None:
                 params[field.id] = field.value
@@ -1811,7 +1817,7 @@ class Monitor(ProjectItem):
         return Monitor(
             _id,
             mode,
-            reporter.opcode,
+            opcode,
 
             params,
             sprite_name,
