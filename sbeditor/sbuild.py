@@ -1349,7 +1349,7 @@ class Data:
             super().__init__(None, "data_listindexrandom", shadow=shadow, pos=pos)
 
 
-class Procedures:
+class Proc:
     class Definition(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
             super().__init__(None, "procedures_definition", shadow=shadow, pos=pos)
@@ -1418,7 +1418,7 @@ class Procedures:
                 Input(arg, value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
 
-class Arguments:
+class Args:
     class EditorBoolean(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
             super().__init__(None, "argument_editor_boolean", shadow=shadow, pos=pos, mutation=Mutation())
@@ -1443,27 +1443,27 @@ class Arguments:
 
 
 class Addons:
-    class IsTurbowarp(Arguments.ReporterBoolean):
+    class IsTurbowarp(Args.ReporterBoolean):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
             super().__init__(shadow=shadow, pos=pos)
             self.set_value("is turbowarp?")
 
-    class IsCompiled(Arguments.ReporterBoolean):
+    class IsCompiled(Args.ReporterBoolean):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
             super().__init__(shadow=shadow, pos=pos)
             self.set_value("is compiled?")
 
-    class IsForkphorus(Arguments.ReporterBoolean):
+    class IsForkphorus(Args.ReporterBoolean):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
             super().__init__(shadow=shadow, pos=pos)
             self.set_value("is forkphorus?")
 
-    class Breakpoint(Procedures.Call):
+    class Breakpoint(Proc.Call):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
             super().__init__(shadow=shadow, pos=pos)
             self.set_proc_code("​​breakpoint​​")
 
-    class Log(Procedures.Call):
+    class Log(Proc.Call):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
             super().__init__(shadow=shadow, pos=pos)
             self.set_proc_code("​​log​​ %s")
@@ -1473,7 +1473,7 @@ class Addons:
                         input_id: str = None, obscurer: str | Block = None):
             return self.set_arg("arg0", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer)
 
-    class Warn(Procedures.Call):
+    class Warn(Proc.Call):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
             super().__init__(shadow=shadow, pos=pos)
             self.set_proc_code("​​warn​​ %s")
@@ -1483,7 +1483,7 @@ class Addons:
                         input_id: str = None, obscurer: str | Block = None):
             return self.set_arg("arg0", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer)
 
-    class Error(Procedures.Call):
+    class Error(Proc.Call):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
             super().__init__(shadow=shadow, pos=pos)
             self.set_proc_code("​​error​​ %s")

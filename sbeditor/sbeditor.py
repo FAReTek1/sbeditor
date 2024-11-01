@@ -1495,6 +1495,7 @@ class Target(ProjectItem):
         new_block.target = self
 
         self.blocks.append(new_block)
+        new_block.link_inputs()
 
         return new_block
 
@@ -1517,7 +1518,7 @@ class Target(ProjectItem):
         return _chain[0] if ret_first \
             else _chain
 
-    def add_variable(self, name: str, value=0, is_cloud_var: bool = False, _id: str=None):
+    def add_variable(self, name: str, value=0, is_cloud_var: bool = False, _id: str = None):
         if _id is None:
             var_id = self.new_id()
         else:
@@ -1793,9 +1794,10 @@ class Monitor(ProjectItem):
 
     @staticmethod
     def from_reporter(reporter: Block, _id: str = None, mode: str = "default",
-                      opcode:str=None, sprite_name: str = None, value=0, width: int | float = 0, height: int | float = 0,
+                      opcode: str = None, sprite_name: str = None, value=0, width: int | float = 0,
+                      height: int | float = 0,
                       x: int | float = 5, y: int | float = 5, visible: bool = False, slider_min: int | float = 0,
-                      slider_max: int | float = 100, is_discrete: bool = True, params: dict=None):
+                      slider_max: int | float = 100, is_discrete: bool = True, params: dict = None):
         if "reporter" not in reporter.stack_type:
             print(f"Warning: {reporter} is not a reporter block; the monitor will return '0'")
         elif "(menu)" in reporter.stack_type:
