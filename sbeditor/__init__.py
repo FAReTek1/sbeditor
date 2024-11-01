@@ -1,3 +1,3 @@
 from .sbeditor import *
-from .sbuild import *
+from . import sbuild
 from .special import Specials

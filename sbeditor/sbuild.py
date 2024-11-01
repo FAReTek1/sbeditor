@@ -8,6 +8,12 @@ class Motion:
 
         def set_steps(self, value, input_type: str | int = "number", shadow_status: int = 1, *,
                       input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("STEPS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -17,6 +23,12 @@ class Motion:
 
         def set_degrees(self, value, input_type: str | int = "number", shadow_status: int = 1, *,
                         input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("DEGREES", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -26,6 +38,12 @@ class Motion:
 
         def set_degrees(self, value, input_type: str | int = "number", shadow_status: int = 1, *,
                         input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("DEGREES", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -35,6 +53,12 @@ class Motion:
 
         def set_to(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                    input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(Input("TO", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
     class GoToMenu(Block):
@@ -50,10 +74,22 @@ class Motion:
 
         def set_x(self, value, input_type: str | int = "number", shadow_status: int = 1, *,
                   input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(Input("X", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
         def set_y(self, value, input_type: str | int = "number", shadow_status: int = 1, *,
                   input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(Input("Y", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
     class GlideTo(Block):
@@ -62,10 +98,22 @@ class Motion:
 
         def set_secs(self, value, input_type: str | int = "positive number", shadow_status: int = 1, *,
                      input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(Input("SECS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
         def set_to(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                    input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(Input("TO", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
     class GlideToMenu(Block):
@@ -81,14 +129,32 @@ class Motion:
 
         def set_x(self, value, input_type: str | int = "number", shadow_status: int = 1, *,
                   input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(Input("X", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
         def set_y(self, value, input_type: str | int = "number", shadow_status: int = 1, *,
                   input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(Input("Y", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
         def set_secs(self, value, input_type: str | int = "positive number", shadow_status: int = 1, *,
                      input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(Input("SECS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
     class PointInDirection(Block):
@@ -97,6 +163,12 @@ class Motion:
 
         def set_direction(self, value, input_type: str | int = "angle", shadow_status: int = 1, *,
                           input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("DIRECTION", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -106,6 +178,12 @@ class Motion:
 
         def set_towards(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                         input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("TOWARDS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -122,6 +200,12 @@ class Motion:
 
         def set_dx(self, value, input_type: str | int = "number", shadow_status: int = 1, *,
                    input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(Input("DX", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
     class ChangeYBy(Block):
@@ -130,6 +214,12 @@ class Motion:
 
         def set_dy(self, value, input_type: str | int = "number", shadow_status: int = 1, *,
                    input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(Input("DY", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
     class SetX(Block):
@@ -138,6 +228,12 @@ class Motion:
 
         def set_x(self, value, input_type: str | int = "number", shadow_status: int = 1, *,
                   input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(Input("X", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
     class SetY(Block):
@@ -146,6 +242,12 @@ class Motion:
 
         def set_y(self, value, input_type: str | int = "number", shadow_status: int = 1, *,
                   input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(Input("Y", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
     class IfOnEdgeBounce(Block):
@@ -177,6 +279,12 @@ class Motion:
 
         def set_distance(self, value, input_type: str | int = "number", shadow_status: int = 1, *,
                          input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("DISTANCE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -186,6 +294,12 @@ class Motion:
 
         def set_distance(self, value, input_type: str | int = "number", shadow_status: int = 1, *,
                          input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("DISTANCE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -212,12 +326,24 @@ class Looks:
 
         def set_message(self, value="Hello!", input_type: str | int = "string", shadow_status: int = 1, *,
                         input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("MESSAGE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer)
             )
 
         def set_secs(self, value=2, input_type: str | int = "positive integer", shadow_status: int = 1, *,
                      input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("SECS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer)
             )
@@ -228,6 +354,12 @@ class Looks:
 
         def set_message(self, value="Hello!", input_type: str | int = "string", shadow_status: int = 1, *,
                         input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("MESSAGE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer)
             )
@@ -238,12 +370,24 @@ class Looks:
 
         def set_message(self, value="Hmm...", input_type: str | int = "string", shadow_status: int = 1, *,
                         input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("MESSAGE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer)
             )
 
         def set_secs(self, value=2, input_type: str | int = "positive integer", shadow_status: int = 1, *,
                      input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("SECS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer)
             )
@@ -254,6 +398,12 @@ class Looks:
 
         def set_message(self, value="Hmm...", input_type: str | int = "string", shadow_status: int = 1, *,
                         input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("MESSAGE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer)
             )
@@ -264,6 +414,12 @@ class Looks:
 
         def set_costume(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                         input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("COSTUME", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -284,6 +440,12 @@ class Looks:
 
         def set_backdrop(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                          input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("BACKDROP", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -300,6 +462,12 @@ class Looks:
 
         def set_backdrop(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                          input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("BACKDROP", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -313,6 +481,12 @@ class Looks:
 
         def set_change(self, value="10", input_type: str | int = "number", shadow_status: int = 1, *,
                        input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("CHANGE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -322,6 +496,12 @@ class Looks:
 
         def set_size(self, value="100", input_type: str | int = "number", shadow_status: int = 1, *,
                      input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("SIZE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -331,6 +511,12 @@ class Looks:
 
         def set_change(self, value="100", input_type: str | int = "number", shadow_status: int = 1, *,
                        input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("CHANGE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -343,6 +529,12 @@ class Looks:
 
         def set_value(self, value="0", input_type: str | int = "number", shadow_status: int = 1, *,
                       input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("VALUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -374,6 +566,12 @@ class Looks:
 
         def set_num(self, value="1", input_type: str | int = "positive integer", shadow_status: int = 1, *,
                     input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("NUM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -408,6 +606,12 @@ class Looks:
 
         def set_stretch(self, value="100", input_type: str | int = "number", shadow_status: int = 1, *,
                         input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("STRETCH", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -417,6 +621,12 @@ class Looks:
 
         def set_change(self, value="10", input_type: str | int = "number", shadow_status: int = 1, *,
                        input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("CHANGE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -428,6 +638,12 @@ class Sounds:
 
         def set_sound_menu(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                            input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("SOUND_MENU", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -444,6 +660,12 @@ class Sounds:
 
         def set_sound_menu(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                            input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("SOUND_MENU", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -457,6 +679,12 @@ class Sounds:
 
         def set_value(self, value="10", input_type: str | int = "number", shadow_status: int = 1, *,
                       input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("VALUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -469,6 +697,12 @@ class Sounds:
 
         def set_value(self, value="100", input_type: str | int = "number", shadow_status: int = 1, *,
                       input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("VALUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -485,6 +719,12 @@ class Sounds:
 
         def set_volume(self, value="-10", input_type: str | int = "number", shadow_status: int = 1, *,
                        input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("VOLUME", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -494,6 +734,12 @@ class Sounds:
 
         def set_volume(self, value="100", input_type: str | int = "number", shadow_status: int = 1, *,
                        input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("VOLUME", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -535,6 +781,12 @@ class Events:
 
         def set_value(self, value="10", input_type: str | int = "number", shadow_status: int = 1, *,
                       input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("VALUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -554,6 +806,12 @@ class Events:
 
         def set_broadcast_input(self, value="message1", input_type: str | int = "broadcast", shadow_status: int = 1, *,
                                 input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("BROADCAST_INPUT", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -563,6 +821,12 @@ class Events:
 
         def set_broadcast_input(self, value="message1", input_type: str | int = "broadcast", shadow_status: int = 1, *,
                                 input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("BROADCAST_INPUT", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -572,6 +836,12 @@ class Events:
 
         def set_touching_object_menu(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                                      input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("TOUCHINGOBJECTMENU", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -590,6 +860,12 @@ class Control:
 
         def set_duration(self, value="1", input_type: str | int = "number", shadow_status: int = 1, *,
                          input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("DURATION", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -599,6 +875,11 @@ class Control:
 
         def set_substack(self, value, input_type: str | int = "block", shadow_status: int = 2, *,
                          input_id: str = None):
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             inp = Input("SUBSTACK", value, input_type, shadow_status, input_id=input_id)
             return self.add_input(inp)
 
@@ -608,11 +889,21 @@ class Control:
 
         def set_substack(self, value, input_type: str | int = "block", shadow_status: int = 2, *,
                          input_id: str = None):
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             inp = Input("SUBSTACK", value, input_type, shadow_status, input_id=input_id)
             return self.add_input(inp)
 
         def set_condition(self, value, input_type: str | int = "block", shadow_status: int = 2, *,
                           input_id: str = None):
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             inp = Input("CONDITION", value, input_type, shadow_status, input_id=input_id)
             return self.add_input(inp)
 
@@ -622,16 +913,31 @@ class Control:
 
         def set_substack1(self, value, input_type: str | int = "block", shadow_status: int = 2, *,
                           input_id: str = None):
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             inp = Input("SUBSTACK", value, input_type, shadow_status, input_id=input_id)
             return self.add_input(inp)
 
         def set_substack2(self, value, input_type: str | int = "block", shadow_status: int = 2, *,
                           input_id: str = None):
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             inp = Input("SUBSTACK2", value, input_type, shadow_status, input_id=input_id)
             return self.add_input(inp)
 
         def set_condition(self, value, input_type: str | int = "block", shadow_status: int = 2, *,
                           input_id: str = None):
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             inp = Input("CONDITION", value, input_type, shadow_status, input_id=input_id)
             return self.add_input(inp)
 
@@ -641,6 +947,12 @@ class Control:
 
         def set_condition(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                           input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("CONDITION", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -650,11 +962,21 @@ class Control:
 
         def set_substack(self, value, input_type: str | int = "block", shadow_status: int = 2, *,
                          input_id: str = None):
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             inp = Input("SUBSTACK", value, input_type, shadow_status, input_id=input_id)
             return self.add_input(inp)
 
         def set_condition(self, value, input_type: str | int = "block", shadow_status: int = 2, *,
                           input_id: str = None):
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             inp = Input("CONDITION", value, input_type, shadow_status, input_id=input_id)
             return self.add_input(inp)
 
@@ -664,11 +986,21 @@ class Control:
 
         def set_substack(self, value, input_type: str | int = "block", shadow_status: int = 2, *,
                          input_id: str = None):
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             inp = Input("SUBSTACK", value, input_type, shadow_status, input_id=input_id)
             return self.add_input(inp)
 
         def set_condition(self, value, input_type: str | int = "block", shadow_status: int = 2, *,
                           input_id: str = None):
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             inp = Input("CONDITION", value, input_type, shadow_status, input_id=input_id)
             return self.add_input(inp)
 
@@ -693,6 +1025,12 @@ class Control:
 
         def set_clone_option(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                              input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("CLONE_OPTION", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -713,11 +1051,21 @@ class Control:
 
         def set_substack(self, value, input_type: str | int = "block", shadow_status: int = 2, *,
                          input_id: str = None):
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             inp = Input("SUBSTACK", value, input_type, shadow_status, input_id=input_id)
             return self.add_input(inp)
 
         def set_value(self, value="5", input_type: str | int = "positive integer", shadow_status: int = 1, *,
                       input_id: str = None):
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             inp = Input("VALUE", value, input_type, shadow_status, input_id=input_id)
             return self.add_input(inp)
 
@@ -742,6 +1090,11 @@ class Control:
 
         def set_substack(self, value, input_type: str | int = "block", shadow_status: int = 2, *,
                          input_id: str = None):
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             inp = Input("SUBSTACK", value, input_type, shadow_status, input_id=input_id)
             return self.add_input(inp)
 
@@ -753,6 +1106,12 @@ class Sensing:
 
         def set_touching_object_menu(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                                      input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("TOUCHINGOBJECTMENU", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -769,6 +1128,12 @@ class Sensing:
 
         def set_color(self, value="#0000FF", input_type: str | int = "color", shadow_status: int = 1, *,
                       input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("COLOR", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -778,11 +1143,23 @@ class Sensing:
 
         def set_color1(self, value="#0000FF", input_type: str | int = "color", shadow_status: int = 1, *,
                        input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("COLOR", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
         def set_color2(self, value="#00FF00", input_type: str | int = "color", shadow_status: int = 1, *,
                        input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("COLOR2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -792,6 +1169,12 @@ class Sensing:
 
         def set_distance_to_menu(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                                  input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("DISTANCETOMENU", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -812,6 +1195,12 @@ class Sensing:
 
         def set_question(self, value="What's your name?", input_type: str | int = "string", shadow_status: int = 1, *,
                          input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("QUESTION", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer)
             )
@@ -826,6 +1215,12 @@ class Sensing:
 
         def set_key_option(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                            input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("KEY_OPTION", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -873,6 +1268,12 @@ class Sensing:
 
         def set_object(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                        input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("OBJECT", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -913,11 +1314,23 @@ class Operators:
 
         def set_num1(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
                      input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("NUM1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
         def set_num2(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
                      input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("NUM2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -927,11 +1340,23 @@ class Operators:
 
         def set_num1(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
                      input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("NUM1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
         def set_num2(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
                      input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("NUM2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -941,11 +1366,23 @@ class Operators:
 
         def set_num1(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
                      input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("NUM1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
         def set_num2(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
                      input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("NUM2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -955,11 +1392,23 @@ class Operators:
 
         def set_num1(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
                      input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("NUM1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
         def set_num2(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
                      input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("NUM2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -969,11 +1418,23 @@ class Operators:
 
         def set_from(self, value="1", input_type: str | int = "number", shadow_status: int = 1, *,
                      input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("FROM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
         def set_to(self, value="10", input_type: str | int = "number", shadow_status: int = 1, *,
                    input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("TO", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -983,11 +1444,23 @@ class Operators:
 
         def set_operand1(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
                          input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("OPERAND1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
         def set_operand2(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
                          input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("OPERAND2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -997,11 +1470,23 @@ class Operators:
 
         def set_operand1(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
                          input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("OPERAND1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
         def set_operand2(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
                          input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("OPERAND2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1011,11 +1496,23 @@ class Operators:
 
         def set_operand1(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
                          input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("OPERAND1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
         def set_operand2(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
                          input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("OPERAND2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1025,11 +1522,23 @@ class Operators:
 
         def set_operand1(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
                          input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("OPERAND1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
         def set_operand2(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
                          input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("OPERAND2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1039,11 +1548,23 @@ class Operators:
 
         def set_operand1(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                          input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("OPERAND1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
         def set_operand2(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                          input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("OPERAND2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1053,6 +1574,12 @@ class Operators:
 
         def set_operand(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                         input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("OPERAND", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1062,11 +1589,23 @@ class Operators:
 
         def set_string1(self, value="apple ", input_type: str | int = "string", shadow_status: int = 1, *,
                         input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("STRING1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
         def set_string2(self, value="banana", input_type: str | int = "string", shadow_status: int = 1, *,
                         input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("STRING2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1076,11 +1615,23 @@ class Operators:
 
         def set_letter(self, value="1", input_type: str | int = "positive integer", shadow_status: int = 1, *,
                        input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("LETTER", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
         def set_string(self, value="apple", input_type: str | int = "string", shadow_status: int = 1, *,
                        input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("STRING", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1090,6 +1641,12 @@ class Operators:
 
         def set_string(self, value="apple", input_type: str | int = "string", shadow_status: int = 1, *,
                        input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("STRING", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1099,11 +1656,23 @@ class Operators:
 
         def set_string1(self, value="apple", input_type: str | int = "string", shadow_status: int = 1, *,
                         input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("STRING1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
         def set_string2(self, value="a", input_type: str | int = "string", shadow_status: int = 1, *,
                         input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("STRING2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1113,11 +1682,23 @@ class Operators:
 
         def set_num1(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
                      input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("NUM1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
         def set_num2(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
                      input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("NUM2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1127,6 +1708,12 @@ class Operators:
 
         def set_num(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
                     input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("NUM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1136,6 +1723,12 @@ class Operators:
 
         def set_num(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
                     input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("NUM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1147,11 +1740,16 @@ class Data:
     class VariableArr(Block):
         def __init__(self, value, input_type: str | int = "variable", shadow_status: int = None, *,
                      pos: tuple[int | float, int | float] = (0, 0)):
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             inp = Input(None, value, input_type, shadow_status)
             if inp.type_str == "block":
-                arr = inp.json()[0]
+                arr = inp.json[0]
             else:
-                arr = inp.json()[1][-1]
+                arr = inp.json[1][-1]
 
             super().__init__(array=arr, pos=pos)
 
@@ -1168,6 +1766,12 @@ class Data:
 
         def set_value(self, value="0", input_type: str | int = "string", shadow_status: int = 1, *,
                       input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("VALUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1180,6 +1784,12 @@ class Data:
 
         def set_value(self, value="1", input_type: str | int = "number", shadow_status: int = 1, *,
                       input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("VALUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1205,9 +1815,9 @@ class Data:
                      pos: tuple[int | float, int | float] = (0, 0)):
             inp = Input(None, value, input_type, shadow_status)
             if inp.type_str == "block":
-                arr = inp.json()[0]
+                arr = inp.json[0]
             else:
-                arr = inp.json()[1][-1]
+                arr = inp.json[1][-1]
 
             super().__init__(array=arr, pos=pos)
 
@@ -1224,6 +1834,12 @@ class Data:
 
         def set_item(self, value="thing", input_type: str | int = "string", shadow_status: int = 1, *,
                      input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("ITEM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1236,6 +1852,12 @@ class Data:
 
         def set_index(self, value="random", input_type: str | int = "positive integer", shadow_status: int = 1, *,
                       input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("INDEX", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1248,11 +1870,23 @@ class Data:
 
         def set_item(self, value="thing", input_type: str | int = "string", shadow_status: int = 1, *,
                      input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("ITEM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
         def set_index(self, value="random", input_type: str | int = "positive integer", shadow_status: int = 1, *,
                       input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("INDEX", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1272,11 +1906,23 @@ class Data:
 
         def set_item(self, value="thing", input_type: str | int = "string", shadow_status: int = 1, *,
                      input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("ITEM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
         def set_index(self, value="random", input_type: str | int = "positive integer", shadow_status: int = 1, *,
                       input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("INDEX", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1289,6 +1935,12 @@ class Data:
 
         def set_index(self, value="random", input_type: str | int = "positive integer", shadow_status: int = 1, *,
                       input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("INDEX", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1301,6 +1953,12 @@ class Data:
 
         def set_item(self, value="thing", input_type: str | int = "string", shadow_status: int = 1, *,
                      input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("ITEM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1320,6 +1978,12 @@ class Data:
 
         def set_item(self, value="thing", input_type: str | int = "string", shadow_status: int = 1, *,
                      input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("ITEM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1356,6 +2020,12 @@ class Proc:
 
         def set_custom_block(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                              input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("custom_block", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1377,6 +2047,12 @@ class Proc:
 
         def set_arg(self, arg, value='', input_type: str | int = "string", shadow_status: int = 1, *,
                     input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input(arg, value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1414,6 +2090,12 @@ class Proc:
 
         def set_arg(self, arg, value, input_type: str | int = "block", shadow_status: int = 1, *,
                     input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input(arg, value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1517,6 +2199,12 @@ class Pen:
 
         def set_color(self, value="#FF0000", input_type: str | int = "color", shadow_status: int = 1, *,
                       input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("COLOR", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1526,11 +2214,23 @@ class Pen:
 
         def set_param(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                       input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("COLOR_PARAM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
         def set_value(self, value="10", input_type: str | int = "number", shadow_status: int = 1, *,
                       input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("VALUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1540,11 +2240,23 @@ class Pen:
 
         def set_param(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                       input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("COLOR_PARAM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
         def set_value(self, value="10", input_type: str | int = "number", shadow_status: int = 1, *,
                       input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("VALUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1554,6 +2266,12 @@ class Pen:
 
         def set_size(self, value="1", input_type: str | int = "positive number", shadow_status: int = 1, *,
                      input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("SIZE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1563,6 +2281,12 @@ class Pen:
 
         def set_size(self, value="1", input_type: str | int = "positive number", shadow_status: int = 1, *,
                      input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("SIZE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1572,6 +2296,12 @@ class Pen:
 
         def set_hue(self, value="1", input_type: str | int = "positive number", shadow_status: int = 1, *,
                     input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("HUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1581,6 +2311,12 @@ class Pen:
 
         def set_hue(self, value="1", input_type: str | int = "positive number", shadow_status: int = 1, *,
                     input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("HUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1590,6 +2326,12 @@ class Pen:
 
         def set_shade(self, value="1", input_type: str | int = "positive number", shadow_status: int = 1, *,
                       input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("SHADE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1599,6 +2341,12 @@ class Pen:
 
         def set_shade(self, value="1", input_type: str | int = "positive number", shadow_status: int = 1, *,
                       input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("SHADE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1617,11 +2365,23 @@ class Music:
 
         def set_drum(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                      input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("DRUM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
         def set_beats(self, value="0.25", input_type: str | int = "positive number", shadow_status: int = 1, *,
                       input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("BEATS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1631,11 +2391,23 @@ class Music:
 
         def set_note(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                      input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("NOTE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
         def set_beats(self, value="0.25", input_type: str | int = "positive number", shadow_status: int = 1, *,
                       input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("BEATS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1645,6 +2417,12 @@ class Music:
 
         def set_beats(self, value="0.25", input_type: str | int = "positive number", shadow_status: int = 1, *,
                       input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("BEATS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1654,6 +2432,12 @@ class Music:
 
         def set_beats(self, value="60", input_type: str | int = "positive number", shadow_status: int = 1, *,
                       input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("TEMPO", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1663,6 +2447,12 @@ class Music:
 
         def set_beats(self, value="60", input_type: str | int = "positive number", shadow_status: int = 1, *,
                       input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("TEMPO", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1676,6 +2466,12 @@ class Music:
 
         def set_instrument(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                            input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("INSTRUMENT", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1685,11 +2481,23 @@ class Music:
 
         def set_drum(self, value="123", input_type: str | int = "positive integer", shadow_status: int = 1, *,
                      input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("DRUM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
         def set_beats(self, value="1", input_type: str | int = "positive number", shadow_status: int = 1, *,
                       input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("BEATS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1699,6 +2507,12 @@ class Music:
 
         def set_instrument(self, value="6", input_type: str | int = "positive integer", shadow_status: int = 1, *,
                            input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("INSTRUMENT", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1724,6 +2538,12 @@ class VideoSensing:
 
         def set_reference(self, value="10", input_type: str | int = "number", shadow_status: int = 1, *,
                           input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("REFERENCE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1733,11 +2553,23 @@ class VideoSensing:
 
         def set_attribute(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                           input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("ATTRIBUTE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
         def set_subject(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                         input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("SUBJECT", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1761,6 +2593,12 @@ class VideoSensing:
 
         def set_video_state(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                             input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("VIDEO_STATE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1777,6 +2615,12 @@ class VideoSensing:
 
         def set_transparency(self, value: str = "50", input_type: str | int = "number", shadow_status: int = 1, *,
                              input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("TRANSPARENCY", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1788,6 +2632,12 @@ class Text2Speech:
 
         def set_words(self, value: str = "50", input_type: str | int = "number", shadow_status: int = 1, *,
                       input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("WORDS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1797,6 +2647,12 @@ class Text2Speech:
 
         def set_voice(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                       input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("VOICE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1813,6 +2669,12 @@ class Text2Speech:
 
         def set_language(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                          input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("LANGUAGE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1831,11 +2693,23 @@ class Translate:
 
         def set_words(self, value="hello!", input_type: str | int = "string", shadow_status: int = 1, *,
                       input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("WORDS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
         def set_language(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                          input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("LANGUAGE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1858,6 +2732,12 @@ class MakeyMakey:
 
         def set_key(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                     input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("KEY", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 
@@ -1874,6 +2754,12 @@ class MakeyMakey:
 
         def set_sequence(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                          input_id: str = None, obscurer: str | Block = None):
+
+            if isinstance(value, Block):
+                value = self.target.add_block(value)
+            elif isinstance(value, list) or isinstance(value, tuple):
+                if isinstance(value[0], Block):
+                    value = self.target.link_chain(value)
             return self.add_input(
                 Input("SEQUENCE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
 

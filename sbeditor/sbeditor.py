@@ -15,6 +15,14 @@ from zipfile import ZipFile
 
 import requests
 
+CURRENT_TARGET: 'Target'
+CURRENT_TARGET = None
+
+def set_current_target(target: 'Target'):
+    global CURRENT_TARGET
+    CURRENT_TARGET = target
+    return target
+
 
 class InvalidProjectError(Exception):
     pass
@@ -550,6 +558,8 @@ class Block(ProjectItem):
             self.base_can_next = can_next
 
             target: Target
+            if target is None:
+                target = CURRENT_TARGET
             self.target = target
 
     @property
@@ -781,13 +791,14 @@ class Block(ProjectItem):
         return chain
 
     def attach(self, block: 'Block'):
+        block.target = self.target
+
         self.target.add_block(block)
 
         my_next = self.target.get_block_by_id(self.next)
 
         block.parent = self.id
         block.next = self.next
-        block.target = self.target
 
         self.next = block.id
 
@@ -1490,9 +1501,9 @@ class Target(ProjectItem):
         """
         Adds a block. Will not attach it to other scripts
         """
-        new_block.id = self.new_id()
-
         new_block.target = self
+
+        new_block.id = self.new_id()
 
         self.blocks.append(new_block)
         new_block.link_inputs()
