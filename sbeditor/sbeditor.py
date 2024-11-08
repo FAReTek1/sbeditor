@@ -15,18 +15,29 @@ from zipfile import ZipFile
 
 import requests
 
-CURRENT_TARGET: 'Target'
-CURRENT_TARGET = None
+from .common import md
+
+md.CURRENT_TARGET = None
+
+
+def full_flat(a):
+    ret = []
+    for i in a:
+        if isinstance(i, list):
+            ret += full_flat(i)
+        else:
+            ret.append(i)
+
+    return ret
 
 
 def set_current_target(target: 'Target'):
-    global CURRENT_TARGET
-    CURRENT_TARGET = target
+    md.CURRENT_TARGET = target
     return target
 
 
 def link_chain(*_chain: ['Block'], ret_first: bool = True):
-    CURRENT_TARGET.link_chain(*_chain, ret_first=ret_first)
+    md.CURRENT_TARGET.link_chain(*_chain, ret_first=ret_first)
 
 
 class InvalidProjectError(Exception):
@@ -506,9 +517,6 @@ class Action:
         pass
 
 
-
-
-
 class Block(ProjectItem):
     def __init__(self, block_id: str | None = None,
                  opcode: str = None, next_block: str = None, parent_block: str = None, inputs: list[Input] = None,
@@ -520,6 +528,9 @@ class Block(ProjectItem):
         A block. This can be a normal block, a shadow block or an array-type block (in json)
         https://en.scratch-wiki.info/wiki/Scratch_File_Format#Blocks
         """
+        self.fetcher = None
+        # This is the block object where the Fetch 'block' will append fetches to, to get its index and place its block
+
         if array is not None:
             self.type_id = array[0]
 
@@ -572,7 +583,7 @@ class Block(ProjectItem):
 
             target: Target
             if target is None:
-                target = CURRENT_TARGET
+                target = md.CURRENT_TARGET
             self.target = target
 
     @property
@@ -742,11 +753,22 @@ class Block(ProjectItem):
 
             return Block(_id, opcode, next_, parent, inputs, fields, is_shadow, (x, y), comment_id, mutation)
 
+    def get_input(self, input_id: str):
+        for input_ in self.inputs:
+            if input_.id == input_id:
+                return input_
+
     def add_input(self, inp: Input):
         if self.type != "Normal":
             raise ValueError("Can't add inputs to an array block!")
 
-        self.inputs.append(inp)
+        new_inps = []
+        for input_ in self.inputs:
+            if input_.id != inp.id:
+                new_inps.append(input_)
+        new_inps.append(inp)
+
+        self.inputs = new_inps
 
         return self
 
@@ -774,6 +796,14 @@ class Block(ProjectItem):
 
         return Block(None, opcode, next_, parent, shadow=shadow, pos=pos)
 
+    @property
+    def stack_parent(self):
+        parent_chain = self.parent_chain
+        parent_chain.reverse()
+        for parent in parent_chain:
+            if parent.stack_type == "stack":
+                return parent
+
     def attached_block(self):
         if self.type != "Normal":
             return
@@ -782,6 +812,7 @@ class Block(ProjectItem):
 
         return self.target.get_block_by_id(self.next)
 
+    @property
     def parent_block(self):
         if self.type != "Normal":
             return
@@ -803,10 +834,12 @@ class Block(ProjectItem):
             chain.append(attached_block)
         return chain
 
-    def attach(self, block: 'Block'):
+    def attach(self, block):
+        if hasattr(block, "run"):
+            block.run(self.target, self)
+
         if not isinstance(block, Block):
             print(f"Not a block: {block}")
-            block.run(self.target, self)
 
             return self
 
@@ -825,10 +858,58 @@ class Block(ProjectItem):
             my_next.parent = block.id
         return block
 
+    @property
+    def is_input(self):
+        return self.parent_block.next != self.id
+
+    @property
+    def parent_inputs(self):
+        # If this block is an input, get the input that links to this block
+        for input_ in self.parent_block.inputs:
+            if input_.value == self.id:
+                return input_
+
+    def slot_above(self, block):
+        # Add a block above this block in the stack. Only works with stack blocks
+        if self.stack_type != "stack":
+            raise ValueError("Can't slot above a reporter!")
+
+        if hasattr(block, "run"):
+            block.run(self.target, self)
+
+        if not isinstance(block, Block):
+            print(f"Not a block: {block}")
+
+            return self
+
+        block.target = self.target
+
+        self.target.add_block(block)
+
+        if self.is_input:
+            # get what input this is
+            my_input = self.parent_inputs
+            my_input.value = block.id
+            block.parent = self.parent
+            self.parent = block.id
+            block.next = self.id
+
+        else:
+            self.parent_block.next = block.id
+            self.parent = block.id
+
+            block.parent = self.parent
+            block.next = self.id
+
+        return block
+
     def link_inputs(self):
         for input_ in self.inputs:
             if input_.type_str == "block":
                 block = self.target.get_block_by_id(input_.value)
+
+                if hasattr(block, "run"):
+                    block.run(self.target, self)
 
                 block.parent = self.id
             if input_.obscurer is not None:
@@ -849,7 +930,7 @@ class Block(ProjectItem):
         chain = [self]
         while True:
             prev = chain[-1]
-            parent = prev.parent_block()
+            parent = prev.parent_block
             if parent in chain:
                 break
             elif parent is None:
@@ -895,7 +976,9 @@ class Block(ProjectItem):
     def parent_chain(self):
         chain = [self]
         while True:
-            parent = chain[-1].parent_block()
+            parent = chain[-1].parent_block
+            # print(f"Parent: {parent}")
+
             if parent in chain:
                 break
             elif parent is None:
@@ -1005,7 +1088,7 @@ class Asset(ProjectItem):
             "dataFormat": self.data_format,
         }
 
-    def download(self, fp: str = None) -> int:
+    def download(self, fp: str = None):
         if fp is None:
             fp = self.name
         if not fp.endswith(f".{self.data_format}"):
@@ -1545,6 +1628,10 @@ class Target(ProjectItem):
             _chain[1:]
         )
 
+        for block in full_flat(_chain[0].subtree):
+            if hasattr(block, "on_linked"):
+                block.on_linked()
+
         return _chain[0] if ret_first \
             else _chain
 
@@ -1845,7 +1932,7 @@ class Monitor(ProjectItem):
         if _id is None:
             _id = reporter.opcode
         if opcode is None:
-            opcode = reporter.opcode.replace('_', ' ')
+            opcode = reporter.opcode  # .replace('_', ' ')
 
         if params is None:
             params = {}
@@ -2020,4 +2107,4 @@ class Project(ProjectItem):
 
     def add_monitor(self, monitor: Monitor) -> Monitor:
         self.monitors.append(monitor)
-        return Monitor
+        return monitor
