@@ -1710,6 +1710,8 @@ class Target(ProjectItem):
             list_.name = obfuscate_str(list_.name)
 
         for block in self.blocks:
+            block.x, block.y = 0, 0
+
             if block.type == "Normal":
                 if hide_all_blocks:
                     # You can only set normal blocks to shadow blocks
