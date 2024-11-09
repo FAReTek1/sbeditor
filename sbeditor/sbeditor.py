@@ -14,21 +14,9 @@ from pathlib import Path
 from zipfile import ZipFile
 
 import requests
-
-from .common import md
+from .common import md, full_flat
 
 md.CURRENT_TARGET = None
-
-
-def full_flat(a):
-    ret = []
-    for i in a:
-        if isinstance(i, list):
-            ret += full_flat(i)
-        else:
-            ret.append(i)
-
-    return ret
 
 
 def set_current_target(target: 'Target'):
@@ -1726,8 +1714,18 @@ class Target(ProjectItem):
                     blocks.append(block)
         return blocks
 
+    @property
+    def all_chains(self):
+        chains = []
+        for block in self.blocks:
+            p_chain = block.parent_chain
+            if p_chain[-1] not in full_flat(chains):
+                chains.append(p_chain[-1].subtree)
+        return chains
 
-Sprite = Target
+
+class Sprite(Target):
+    pass
 
 
 class Extension(ProjectItem):

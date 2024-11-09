@@ -1,3 +1,4 @@
 from .sbeditor import *
 from .sbuild import *
-from . import packager
+from .plugins import packager
+from . import plugins

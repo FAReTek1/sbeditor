@@ -1,5 +1,5 @@
-from .common import md
-from .sbuild import Data, Block, Target, Operators, Input
+from sbeditor.common import md
+from sbeditor.sbuild import Data, Block, Target, Operators, Input
 
 ret_idxs = {}
 
@@ -74,3 +74,7 @@ class Fetch(Data.ItemOfList):
                 .set_list(ret_list)
             )
         )
+
+
+def package(sprite: Target):
+    pass
