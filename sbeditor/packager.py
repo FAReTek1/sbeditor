@@ -1,8 +1,8 @@
-from .sbuild import Data, Block, Target, Operators, Input
 from .common import md
-
+from .sbuild import Data, Block, Target, Operators, Input
 
 ret_idxs = {}
+
 
 class Return(Data.AddToList):
     def __init__(self, value, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -15,7 +15,6 @@ class Return(Data.AddToList):
         ret_list = target.add_list("__return__")
         self.set_list(ret_list)
         self.block = block
-
 
 
 class Fetch(Data.ItemOfList):
@@ -37,13 +36,10 @@ class Fetch(Data.ItemOfList):
 
     def on_linked(self):
         ret_list = self.target.add_list("__return__")
-        print()
         stack_parent = self.stack_parent
 
         if stack_parent.id not in ret_idxs:
             ret_idxs[stack_parent.id] = []
-
-        print(ret_idxs[stack_parent.id], stack_parent)
 
         # Find the current index
         ret_idxs[stack_parent.id].append(self)
