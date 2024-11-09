@@ -15,7 +15,7 @@ with open('README.md', 'r', encoding="utf-8") as readme:
 
 setup(
     name='sbeditor',
-    version="v0.0.3.1",
+    version="v0.0.4",
     packages=['sbeditor'],
     url='https://github.com/FAReTek1/sbeditor',
     license='MIT',
