@@ -129,6 +129,12 @@ def package(sprite: Target):
             ret2 += (f"\n.add_field("
                      f"Field(\"{field.id}\", \"{field.value}\", \"{field.value_id}\")"
                      f")")
+        if block.mutation is not None:
+            ret2 += (f"\n.add_mutation("
+                     f"Mutation(proc_code=\"{block.mutation.proc_code}\", argument_ids={block.mutation.argument_ids}, "
+                     f"warp={block.mutation.warp}, argument_names={block.mutation.argument_names}, "
+                     f"argument_defaults={block.mutation.argument_defaults}, has_next={block.mutation.has_next}"
+                     f"))")
 
         return ret2
 
