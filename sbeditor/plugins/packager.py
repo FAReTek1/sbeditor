@@ -1,3 +1,5 @@
+import copy
+
 from sbeditor.common import md
 from sbeditor.sbuild import Data, Block, Target, Operators, Input
 
@@ -76,10 +78,23 @@ class Fetch(Data.ItemOfList):
         )
 
 
-def package(sprite: Target):
+def package(sprite: Target, prf: str=None):
+    # Copy sprite so we don't edit the original stuff
+    sprite = copy.deepcopy(sprite)
+    if prf is None:
+        prf = f"{sprite.name} | "
+
+    # Rename broadcasts variables & lists
+    for broadcast in sprite.broadcasts:
+        broadcast.name = f"{prf}{broadcast.name}"
+    for variable in sprite.variables:
+        variable.name = f"{prf}{variable.name}"
+    for lst in sprite.lists:
+        lst.name = f"{prf}{lst.name}"
+
     ret = "from sbeditor import *\n" \
           "def add_to_sprite(sprite: Target):\n" \
-           "\tset_current_target(sprite)\n"
+          "\tset_current_target(sprite)\n"
 
     ret += "\tbroadcasts = {"
     for broadcast in sprite.broadcasts:
@@ -93,7 +108,7 @@ def package(sprite: Target):
 
     ret += "\tlists = {"
     for lst in sprite.lists:
-        ret += f"\"{lst.name}\": sprite.add_list(\"{lst.name}\", \"{lst.value}\"),"
+        ret += f"\"{lst.name}\": sprite.add_list(\"{lst.name}\", {lst.value}),"
     ret += "}\n"
 
     def package_block(block: Block):
@@ -109,8 +124,8 @@ def package(sprite: Target):
                          f"))")
             elif inp.type_id < 11:
                 ret2 += (f"\n.add_input(Input("
-                        f"\"{inp.id}\", \"{inp.value}\", {inp.type_id}, {inp.shadow_idx}, input_id={inp.input_id}, obscurer={obscurer}"
-                        f"))")
+                         f"\"{inp.id}\", \"{inp.value}\", {inp.type_id}, {inp.shadow_idx}, input_id={inp.input_id}, obscurer={obscurer}"
+                         f"))")
             else:
                 if inp.type_id == 11:
                     ret2 += (f"\n.add_input(Input("
@@ -126,15 +141,40 @@ def package(sprite: Target):
                              f"))")
 
         for field in block.fields:
+            value = field.value
+            if field.value_id is not None:
+                if field.id == "VARIABLE":
+                    value_id = f"variables[\"{prf}{field.value}\"].id"
+                    value = f"{prf}{value}"
+                elif field.id == "LIST":
+                    value_id = f"lists[\"{prf}{field.value}\"].id"
+                    value = f"{prf}{value}"
+                else:
+                    value_id = "None"
+            else:
+                value_id = "None"
+
             ret2 += (f"\n.add_field("
-                     f"Field(\"{field.id}\", \"{field.value}\", \"{field.value_id}\")"
+                     f"Field(\"{field.id}\", \"{value}\", {value_id})"
                      f")")
+
         if block.mutation is not None:
-            ret2 += (f"\n.add_mutation("
-                     f"Mutation(proc_code=\"{block.mutation.proc_code}\", argument_ids={block.mutation.argument_ids}, "
-                     f"warp={block.mutation.warp}, argument_names={block.mutation.argument_names}, "
-                     f"argument_defaults={block.mutation.argument_defaults}, has_next={block.mutation.has_next}"
-                     f"))")
+            ret2 += f"\n.add_mutation(Mutation("
+
+            if block.mutation.proc_code is not None:
+                # Add the name of the module on top asw
+                ret2 += f"proc_code=\"{prf}{block.mutation.proc_code}\", "
+            if block.mutation.argument_ids is not None:
+                ret2 += f"argument_ids={block.mutation.argument_ids}, "
+            if block.mutation.warp is not None:
+                ret2 += f"warp={block.mutation.warp}, "
+            if block.mutation.argument_names is not None:
+                ret2 += f"argument_names = {block.mutation.argument_names}, "
+            if block.mutation.argument_defaults is not None:
+                ret2 += f"argument_defaults={block.mutation.argument_defaults}, "
+            if block.mutation.has_next is not None:
+                ret2 += f"has_next={block.mutation.has_next}"
+            ret2 += f"))"
 
         return ret2
 
