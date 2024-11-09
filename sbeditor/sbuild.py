@@ -2106,9 +2106,15 @@ class Args:
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
             super().__init__(None, "argument_editor_boolean", shadow=shadow, pos=pos, mutation=Mutation())
 
+        def set_text(self, value: str = "foo", value_id: str = None):
+            return self.add_field(Field("TEXT", value, value_id))
+
     class EditorStringNumber(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
             super().__init__(None, "argument_editor_string_number", shadow=shadow, pos=pos, mutation=Mutation())
+
+        def set_text(self, value: str = "foo", value_id: str = None):
+            return self.add_field(Field("TEXT", value, value_id))
 
     class ReporterBoolean(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
