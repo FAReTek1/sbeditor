@@ -363,6 +363,16 @@ class Input(ProjectItem):
         Input into a scratch block. Can contain reporters
         https://en.scratch-wiki.info/wiki/Scratch_File_Format#Blocks
         """
+        if isinstance(value, Input):
+            param_type = value.id
+            input_type = value.type_id
+            shadow_status = value.shadow_idx
+            input_id = value.input_id
+            pos = value.pos
+            obscurer = value.obscurer
+
+            value = value.value
+
         super().__init__(param_type)
 
         if isinstance(obscurer, Block):
@@ -385,7 +395,7 @@ class Input(ProjectItem):
         else:
             self.type_id = input_type
 
-        self.value = value
+        self.value = str(value)
 
         if obscurer is not None:
             shadow_status = 3
@@ -878,16 +888,14 @@ class Block(ProjectItem):
             # get what input this is
             my_input = self.parent_inputs
             my_input.value = block.id
-            block.parent = self.parent
-            self.parent = block.id
-            block.next = self.id
 
         else:
             self.parent_block.next = block.id
-            self.parent = block.id
 
-            block.parent = self.parent
-            block.next = self.id
+        block.parent = self.parent
+        self.parent = block.id
+
+        block.next = self.id
 
         return block
 
@@ -1719,8 +1727,16 @@ class Target(ProjectItem):
         chains = []
         for block in self.blocks:
             p_chain = block.parent_chain
-            if p_chain[-1] not in full_flat(chains):
-                chains.append(p_chain[-1].subtree)
+
+            ff = list(map(
+                lambda x: x.id,
+                full_flat(chains)))
+
+            print(ff, p_chain[0].id)
+
+            if p_chain[0].id not in ff:
+                chains.append(p_chain[0].subtree)
+
         return chains
 
 
