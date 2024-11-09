@@ -77,4 +77,70 @@ class Fetch(Data.ItemOfList):
 
 
 def package(sprite: Target):
-    pass
+    ret = "from sbeditor import *\n" \
+          "def add_to_sprite(sprite: Target):\n" \
+           "\tset_current_target(sprite)\n"
+
+    ret += "\tbroadcasts = {"
+    for broadcast in sprite.broadcasts:
+        ret += f"\"{broadcast.name}\": sprite.add_broadcast(\"{broadcast.name}\"),"
+    ret += "}\n"
+
+    ret += "\tvariables = {"
+    for variable in sprite.variables:
+        ret += f"\"{variable.name}\": sprite.add_variable(\"{variable.name}\", \"{variable.value}\", {variable.is_cloud_var}),"
+    ret += "}\n"
+
+    ret += "\tlists = {"
+    for lst in sprite.lists:
+        ret += f"\"{lst.name}\": sprite.add_list(\"{lst.name}\", \"{lst.value}\"),"
+    ret += "}\n"
+
+    def package_block(block: Block):
+        ret2 = f"\t\tBlock(None, \"{block.opcode}\", shadow={block.is_shadow})"
+        for inp in block.inputs:
+            obscurer = None
+            if inp.obscurer is not None:
+                ret2 += package_block(inp.obscurer)
+
+            if inp.type_id == 2:
+                ret2 += (f"\n.add_input(Input("
+                         f"\"{inp.id}\", sprite.add_block({package_block(sprite.get_block_by_id(inp.value))}), shadow_status={inp.shadow_idx}, input_id={inp.input_id}, obscurer={obscurer}"
+                         f"))")
+            elif inp.type_id < 11:
+                ret2 += (f"\n.add_input(Input("
+                        f"\"{inp.id}\", \"{inp.value}\", {inp.type_id}, {inp.shadow_idx}, input_id={inp.input_id}, obscurer={obscurer}"
+                        f"))")
+            else:
+                if inp.type_id == 11:
+                    ret2 += (f"\n.add_input(Input("
+                             f"\"{inp.id}\", \"{inp.value}\", {inp.type_id}, {inp.shadow_idx}, input_id=broadcasts[\"{inp.value}\"].id, obscurer={obscurer}"
+                             f"))")
+                elif inp.type_id == 12:
+                    ret2 += (f"\n.add_input(Input("
+                             f"\"{inp.id}\", \"{inp.value}\", {inp.type_id}, {inp.shadow_idx}, input_id=variables[\"{inp.value}\"].id, obscurer={obscurer}"
+                             f"))")
+                else:
+                    ret2 += (f"\n.add_input(Input("
+                             f"\"{inp.id}\", \"{inp.value}\", {inp.type_id}, {inp.shadow_idx}, input_id=lists[\"{inp.value}\"].id, obscurer={obscurer}"
+                             f"))")
+
+        for field in block.fields:
+            ret2 += (f"\n.add_field("
+                     f"Field(\"{field.id}\", \"{field.value}\", \"{field.value_id}\")"
+                     f")")
+
+        return ret2
+
+    for chain in sprite.all_chains:
+        # bprint(chain)
+
+        ret += f"\tlink_chain(\n"
+
+        for block in chain:
+            if isinstance(block, Block):
+                ret += f"{package_block(block)},\n"
+
+        ret += "\n\t)\n"
+
+    return ret

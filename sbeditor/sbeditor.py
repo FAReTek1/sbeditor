@@ -363,6 +363,12 @@ class Input(ProjectItem):
         Input into a scratch block. Can contain reporters
         https://en.scratch-wiki.info/wiki/Scratch_File_Format#Blocks
         """
+        self.value = None
+        self.obscurer = None
+        self.pos = None
+        self.input_id = None
+        self.shadow_idx = None
+        self.type_id = None
         if isinstance(value, Input):
             param_type = value.id
             input_type = value.type_id
@@ -755,6 +761,12 @@ class Block(ProjectItem):
         for input_ in self.inputs:
             if input_.id == input_id:
                 return input_
+
+    def add_input_or_block(self, inp):
+        if isinstance(inp.value, Block):
+            self.target.add_block(inp.value)
+
+        return self.add_input(inp)
 
     def add_input(self, inp: Input):
         if self.type != "Normal":
@@ -1731,8 +1743,6 @@ class Target(ProjectItem):
             ff = list(map(
                 lambda x: x.id,
                 full_flat(chains)))
-
-            print(ff, p_chain[0].id)
 
             if p_chain[0].id not in ff:
                 chains.append(p_chain[0].subtree)
