@@ -149,4 +149,6 @@ def package(sprite: Target):
 
         ret += "\n\t)\n"
 
+    ret += f"\n\treturn broadcasts, variables, lists"
+
     return ret
