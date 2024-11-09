@@ -13,6 +13,8 @@ from hashlib import md5
 from pathlib import Path
 from zipfile import ZipFile
 
+from numpy.core.shape_base import block
+
 import requests
 from .common import md, full_flat
 
@@ -64,6 +66,9 @@ class ProjectItem(ABC):
         if fp is None:
             fp = f"ProjectItem{self.id}.json"
         data = self.json
+        # Bad object: {o.__dict__}
+        with open(f"{fp}.py", "w", encoding="utf-8") as spf:
+            spf.write(str(data))
 
         with open(fp, "w", encoding="utf-8") as save_json_file:
             json.dump(data, save_json_file)
@@ -358,7 +363,7 @@ class Mutation(ProjectItem):
 class Input(ProjectItem):
     def __init__(self, param_type: str, value, input_type: str | int = "string", shadow_status: int = None, *,
                  input_id: str = None,
-                 pos: tuple[int | float, int | float] = None, obscurer: str = None):
+                 pos: tuple[int | float, int | float] = None, obscurer = None):
         """
         Input into a scratch block. Can contain reporters
         https://en.scratch-wiki.info/wiki/Scratch_File_Format#Blocks
@@ -401,7 +406,7 @@ class Input(ProjectItem):
         else:
             self.type_id = input_type
 
-        self.value = str(value)
+        self.value = value
 
         if obscurer is not None:
             shadow_status = 3
@@ -540,6 +545,7 @@ class Block(ProjectItem):
 
             keys = tuple(INPUT_CODES.keys())
             vals = tuple(INPUT_CODES.values())
+
             self.type = keys[vals.index(self.type_id)]
             super().__init__(self.type)
 
@@ -772,11 +778,10 @@ class Block(ProjectItem):
         if self.type != "Normal":
             raise ValueError("Can't add inputs to an array block!")
 
-        new_inps = []
+        new_inps = [inp]
         for input_ in self.inputs:
             if input_.id != inp.id:
                 new_inps.append(input_)
-        new_inps.append(inp)
 
         self.inputs = new_inps
 
@@ -857,15 +862,14 @@ class Block(ProjectItem):
 
         self.target.add_block(block)
 
-        my_next = self.target.get_block_by_id(self.next)
-
         block.parent = self.id
         block.next = self.next
 
-        self.next = block.id
-
-        if my_next is not None:
+        if self.next is not None:
+            my_next = self.target.get_block_by_id(self.next)
             my_next.parent = block.id
+
+        self.next = block.id
         return block
 
     @property
@@ -912,6 +916,9 @@ class Block(ProjectItem):
         return block
 
     def link_inputs(self):
+        if self.type != "Normal":
+            return
+
         for input_ in self.inputs:
             if input_.type_str == "block":
                 block = self.target.get_block_by_id(input_.value)
@@ -920,9 +927,11 @@ class Block(ProjectItem):
                     block.run(self.target, self)
 
                 block.parent = self.id
+
             if input_.obscurer is not None:
-                obscurer = self.target.get_block_by_id(input_.obscurer)
-                obscurer.parent = self.id
+                if isinstance(input_.obscurer, str):
+                    obscurer = self.target.get_block_by_id(input_.obscurer)
+                    obscurer.parent = self.id
 
             # else:
             #     print(f"bad input {input_} - {input_.type_str}")
@@ -957,6 +966,9 @@ class Block(ProjectItem):
 
     @property
     def subtree(self):
+        if self.type != "Normal":
+            return [self]
+
         _full_chain = [self]
 
         for child in self.children:
@@ -970,13 +982,25 @@ class Block(ProjectItem):
 
     @property
     def children(self):
+        if self.type != "Normal":
+            return []
+
         _children = []
         for input_ in self.inputs:
             if input_.type_str == "block":
-                _children.append(self.target.get_block_by_id(input_.value))
+                if isinstance(input_.value, list):
+                    block = Block(array=input_.value)
+                else:
+                    block = self.target.get_block_by_id(input_.value)
+                _children.append(block)
 
             if input_.obscurer is not None:
-                _children.append(self.target.get_block_by_id(input_.obscurer))
+                if isinstance(input_.obscurer, list):
+                    block = Block(array=input_.obscurer)
+                else:
+                    block = self.target.get_block_by_id(input_.obscurer)
+                if block is not None:
+                    _children.append(block)
 
         return _children
 
@@ -1441,8 +1465,8 @@ class Target(ProjectItem):
         return blocks
 
     def get_block_by_id(self, block_id: str):
-        if block_id is None:
-            return
+        if not isinstance(block_id, str):
+            raise TypeError(f"block_id '{block_id}' is not <type 'str'>, but {type(block_id)}")
 
         for block in self.blocks:
             if block.id == block_id:

@@ -1,4 +1,5 @@
 import copy
+import warnings
 
 from sbeditor.common import md
 from sbeditor.sbuild import Data, Block, Target, Operators, Input
@@ -78,7 +79,10 @@ class Fetch(Data.ItemOfList):
         )
 
 
-def package(sprite: Target, prf: str=None):
+def package(sprite: Target, prf: str = None):
+    def add_prf(name: str):
+        return name if name.startswith("__") and name.endswith("__") else f"{prf}{name}"
+
     # Copy sprite so we don't edit the original stuff
     sprite = copy.deepcopy(sprite)
     if prf is None:
@@ -86,11 +90,11 @@ def package(sprite: Target, prf: str=None):
 
     # Rename broadcasts variables & lists
     for broadcast in sprite.broadcasts:
-        broadcast.name = f"{prf}{broadcast.name}"
+        broadcast.name = add_prf(broadcast.name)
     for variable in sprite.variables:
-        variable.name = f"{prf}{variable.name}"
+        variable.name = add_prf(variable.name)
     for lst in sprite.lists:
-        lst.name = f"{prf}{lst.name}"
+        lst.name = add_prf(lst.name)
 
     ret = "from sbeditor import *\n" \
           "def add_to_sprite(sprite: Target):\n" \
@@ -112,15 +116,58 @@ def package(sprite: Target, prf: str=None):
     ret += "}\n"
 
     def package_block(block: Block):
+        if not (isinstance(block, list) or isinstance(block, Block)):
+            warnings.warn(f"{block} is not a block!")
+            raise ValueError(f"bad input {block}")
+            # return ''
+
+        if isinstance(block, list):
+            block = Block(array=block)
+            arry = block.json[1]
+
+            if block.type == "broadcast":
+                arry[2] = f"broadcasts[\"{add_prf(block.name)}\"].id"
+            if block.type == "list":
+                arry[2] = f"lists[\"{add_prf(block.name)}\"].id"
+            if block.type == "variable":
+                arry[2] = f"variables[\"{add_prf(block.name)}\"].id"
+
+            return f"Block(array=[{arry[0]}, \"{arry[1]}\", {arry[2]}])"
+
+        elif block.type != "Normal":
+            return f"Block(array={block.json[1]})"
+        else:
+            ... # print(f"-- {block}, {type(block)}")
+
         ret2 = f"\t\tBlock(None, \"{block.opcode}\", shadow={block.is_shadow})"
         for inp in block.inputs:
             obscurer = None
             if inp.obscurer is not None:
-                ret2 += package_block(inp.obscurer)
+                # print("obscurer:", inp.obscurer)
+                if isinstance(inp.obscurer, list):
+                    inner_block = inp.obscurer
+                else:
+                    inner_block = sprite.get_block_by_id(inp.obscurer)
+                packaged = package_block(inner_block)
+                packaged = f"sprite.add_block({packaged})" if packaged != '' else "''"
+                obscurer = packaged
+                # ret2 += (f"\n.add_input(Input("
+                #          f"\"{inp.id}\", {packaged}, shadow_status={inp.shadow_idx}, input_id={inp.input_id}, obscurer={obscurer}"
+                #          f"))")
 
             if inp.type_id == 2:
+                # print("value:", inp.value)
+                if isinstance(inp.value, list):
+                    inner_block = Block(array=inp.value)
+                else:
+                    inner_block = sprite.get_block_by_id(inp.value)
+
+                # print(inp.__dict__, type(inner_block))
+                packaged = package_block(inner_block)
+                packaged = f"sprite.add_block({packaged})" if packaged != '' else "''"
+
                 ret2 += (f"\n.add_input(Input("
-                         f"\"{inp.id}\", sprite.add_block({package_block(sprite.get_block_by_id(inp.value))}), shadow_status={inp.shadow_idx}, input_id={inp.input_id}, obscurer={obscurer}"
+                         f"\"{inp.id}\", {packaged}, shadow_status={inp.shadow_idx}, input_id={inp.input_id}, obscurer={obscurer}"
                          f"))")
             elif inp.type_id < 11:
                 ret2 += (f"\n.add_input(Input("
@@ -144,11 +191,11 @@ def package(sprite: Target, prf: str=None):
             value = field.value
             if field.value_id is not None:
                 if field.id == "VARIABLE":
-                    value_id = f"variables[\"{prf}{field.value}\"].id"
-                    value = f"{prf}{value}"
+                    value_id = f"variables[\"{add_prf(field.value)}\"].id"
+                    value = add_prf(value)
                 elif field.id == "LIST":
-                    value_id = f"lists[\"{prf}{field.value}\"].id"
-                    value = f"{prf}{value}"
+                    value_id = f"lists[\"{add_prf(field.value)}\"].id"
+                    value = add_prf(value)
                 else:
                     value_id = "None"
             else:
@@ -163,7 +210,7 @@ def package(sprite: Target, prf: str=None):
 
             if block.mutation.proc_code is not None:
                 # Add the name of the module on top asw
-                ret2 += f"proc_code=\"{prf}{block.mutation.proc_code}\", "
+                ret2 += f"proc_code=\"{add_prf(block.mutation.proc_code)}\", "
             if block.mutation.argument_ids is not None:
                 ret2 += f"argument_ids={block.mutation.argument_ids}, "
             if block.mutation.warp is not None:
