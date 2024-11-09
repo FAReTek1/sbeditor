@@ -8,14 +8,14 @@ import math
 import os
 import re
 import shutil
+import warnings
 from abc import ABC, abstractmethod
 from hashlib import md5
 from pathlib import Path
 from zipfile import ZipFile
 
-from numpy.core.shape_base import block
-
 import requests
+
 from .common import md, full_flat
 
 md.CURRENT_TARGET = None
@@ -363,7 +363,7 @@ class Mutation(ProjectItem):
 class Input(ProjectItem):
     def __init__(self, param_type: str, value, input_type: str | int = "string", shadow_status: int = None, *,
                  input_id: str = None,
-                 pos: tuple[int | float, int | float] = None, obscurer = None):
+                 pos: tuple[int | float, int | float] = None, obscurer=None):
         """
         Input into a scratch block. Can contain reporters
         https://en.scratch-wiki.info/wiki/Scratch_File_Format#Blocks
@@ -658,7 +658,7 @@ class Block(ProjectItem):
         }
 
         if not self.can_next and self.next is not None:
-            print(self, "can't next:", self.__dict__)
+            warnings.warn(f"{self} can't next: {self.__dict__}")
 
             ret["next"] = None
 
@@ -854,7 +854,7 @@ class Block(ProjectItem):
             block.run(self.target, self)
 
         if not isinstance(block, Block):
-            print(f"Not a block: {block}")
+            warnings.warn(f"{block} is not a block:")
 
             return self
 
@@ -892,7 +892,7 @@ class Block(ProjectItem):
             block.run(self.target, self)
 
         if not isinstance(block, Block):
-            print(f"Not a block: {block}")
+            warnings.warn(f"{block} is not a block")
 
             return self
 
@@ -932,9 +932,6 @@ class Block(ProjectItem):
                 if isinstance(input_.obscurer, str):
                     obscurer = self.target.get_block_by_id(input_.obscurer)
                     obscurer.parent = self.id
-
-            # else:
-            #     print(f"bad input {input_} - {input_.type_str}")
 
     def attach_chain(self, chain: ['Block']):
         b = self
@@ -1009,7 +1006,6 @@ class Block(ProjectItem):
         chain = [self]
         while True:
             parent = chain[-1].parent_block
-            # print(f"Parent: {parent}")
 
             if parent in chain:
                 break
@@ -1126,31 +1122,30 @@ class Asset(ProjectItem):
         if not fp.endswith(f".{self.data_format}"):
             fp += f".{self.data_format}"
 
-        # print('-' * 20)
-        # print(f"Downloading {self} to {fp}...")
+        # Downloading {self} to {fp}...
 
         directory = Path(fp).parent
         if self.file_name in os.listdir(directory):
-            # print(f"We already have the file {self.file_name}!")
+            # We already have the file {self.file_name}!
             return
 
         content = ''
-        # print(f"Downloading using load method: {self.load_method}")
+        # Downloading using load method: {self.load_method}
         if self.load_method == "url":
-            # print(f"Requesting https://assets.scratch.mit.edu/internalapi/asset/{self.file_name}/get/")
+            # Requesting https://assets.scratch.mit.edu/internalapi/asset/{self.file_name}/get/"
             rq = requests.get(f"https://assets.scratch.mit.edu/internalapi/asset/{self.file_name}/get/")
 
-            # print(f"Requested with status code: {rq.status_code}")
+            # Requested with status code: {rq.status_code}
             if rq.status_code != 200:
                 raise ValueError(f"Can't download asset {self.file_name}\nIs not uploaded to scratch!")
 
             content = rq.content
 
         elif isinstance(self.load_method, list):
-            # print(f"Downloading with a list-type load method")
+            # Downloading with a list-type load method
             load_type, load_path = self.load_method
             if load_type == "zip":
-                # print(f"Extracting {self.file_name} from zip: {load_path}")
+                # Extracting {self.file_name} from zip: {load_path}
                 with ZipFile(load_path, "r") as achv:
                     content = achv.read(self.file_name)
 
@@ -1798,7 +1793,7 @@ class Extension(ProjectItem):
             # Non-standard extension
             self.is_standard = False
 
-            print(f"{_id} is not a standard extension code")
+            warnings.warn(f"{_id} is not a standard extension code")
 
     def __repr__(self):
         return f"Ext<{self.id}>"
@@ -1975,9 +1970,9 @@ class Monitor(ProjectItem):
                       x: int | float = 5, y: int | float = 5, visible: bool = False, slider_min: int | float = 0,
                       slider_max: int | float = 100, is_discrete: bool = True, params: dict = None):
         if "reporter" not in reporter.stack_type:
-            print(f"Warning: {reporter} is not a reporter block; the monitor will return '0'")
+            warnings.warn(f"{reporter} is not a reporter block; the monitor will return '0'")
         elif "(menu)" in reporter.stack_type:
-            print(f"Warning: {reporter} is a menu block; the monitor will return '0'")
+            warnings.warn(f"{reporter} is a menu block; the monitor will return '0'")
         # Maybe add note that length of list doesn't work fsr?? idk
         if _id is None:
             _id = reporter.opcode
@@ -2114,7 +2109,7 @@ class Project(ProjectItem):
             try:
                 shutil.rmtree(fp)
             except PermissionError as e:
-                print(f"Permission error ignored: {e}")
+                warnings.warn(f"Permission error ignored: {e}")
 
         os.makedirs(fp, exist_ok=True)
 
