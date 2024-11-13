@@ -363,7 +363,7 @@ class Mutation(ProjectItem):
 class Input(ProjectItem):
     def __init__(self, param_type: str, value, input_type: str | int = "string", shadow_status: int = None, *,
                  input_id: str = None,
-                 pos: tuple[int | float, int | float] = None, obscurer=None):
+                 pos: tuple[int | float, int | float] = None, obscurer=None, sprite: 'Target'=None):
         """
         Input into a scratch block. Can contain reporters
         https://en.scratch-wiki.info/wiki/Scratch_File_Format#Blocks
@@ -374,6 +374,7 @@ class Input(ProjectItem):
         self.input_id = None
         self.shadow_idx = None
         self.type_id = None
+
         if isinstance(value, Input):
             param_type = value.id
             input_type = value.type_id
