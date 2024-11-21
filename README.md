@@ -1,4 +1,5 @@
 # sbeditor
+# FIXING MAJOR BUGS
 
 #### A parser for all things sb3 (and sprite3), created by [faretek1](https://scratch.mit.edu/users/faretek1/)
 
