@@ -122,7 +122,7 @@ def package(sprite: Target, prf: str = None):
             # return ''
 
         if isinstance(block, list):
-            block = Block(array=block)
+            block = Block(array=block, target=sprite)
             arry = block.json[1]
 
             if block.type == "broadcast":
@@ -155,7 +155,7 @@ def package(sprite: Target, prf: str = None):
                 #          f"\"{inp.id}\", {packaged}, shadow_status={inp.shadow_idx}, input_id={inp.input_id}, obscurer={obscurer}"
                 #          f"))")
 
-            if inp.type_id == 2:
+            if inp.type_id == 2 and inp.value is not None:
                 # print("value:", inp.value)
                 if isinstance(inp.value, list):
                     inner_block = Block(array=inp.value)

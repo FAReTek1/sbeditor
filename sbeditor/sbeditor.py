@@ -66,9 +66,6 @@ class ProjectItem(ABC):
         if fp is None:
             fp = f"ProjectItem{self.id}.json"
         data = self.json
-        # Bad object: {o.__dict__}
-        with open(f"{fp}.py", "w", encoding="utf-8") as spf:
-            spf.write(str(data))
 
         with open(fp, "w", encoding="utf-8") as save_json_file:
             json.dump(data, save_json_file)
@@ -363,7 +360,7 @@ class Mutation(ProjectItem):
 class Input(ProjectItem):
     def __init__(self, param_type: str, value, input_type: str | int = "string", shadow_status: int = None, *,
                  input_id: str = None,
-                 pos: tuple[int | float, int | float] = None, obscurer=None, sprite: 'Target'=None):
+                 pos: tuple[int | float, int | float] = None, obscurer=None, block: 'Block' = None):
         """
         Input into a scratch block. Can contain reporters
         https://en.scratch-wiki.info/wiki/Scratch_File_Format#Blocks
@@ -371,9 +368,11 @@ class Input(ProjectItem):
         self.value = None
         self.obscurer = None
         self.pos = None
-        self.input_id = None
         self.shadow_idx = None
         self.type_id = None
+        self.input_id = None
+
+        self.block = block
 
         if isinstance(value, Input):
             param_type = value.id
@@ -407,6 +406,7 @@ class Input(ProjectItem):
         else:
             self.type_id = input_type
 
+        self.input_id = input_id
         self.value = value
 
         if obscurer is not None:
@@ -416,7 +416,7 @@ class Input(ProjectItem):
             shadow_status = 1
 
         self.shadow_idx = shadow_status
-        self.input_id = input_id
+        #  self.input_id = input_id
         self.pos = pos
 
         self.obscurer = obscurer
@@ -430,7 +430,7 @@ class Input(ProjectItem):
                 )[self.shadow_idx]
 
     @property
-    def type_str(self):
+    def type_str(self) -> str:
         keys = tuple(INPUT_CODES.keys())
         values = tuple(INPUT_CODES.values())
 
@@ -469,12 +469,39 @@ class Input(ProjectItem):
             return Input(_id, data[1], "block", shadow_status=shadow_idx, obscurer=obscurer)
 
     @property
+    def target(self):
+        return self.block.target
+
+    @property
+    def value_obj(self):
+        if self.type_str == "broadcast":
+            print(self.input_id)
+            return self.target.get_broadcast_by_id(self.input_id)
+        if self.type_str == "variable":
+            print(self.input_id)
+            return self.target.get_var_by_id(self.input_id)
+        if self.type_str == "list":
+            print(self.input_id)
+            return self.target.get_list_by_id(self.input_id)
+        return self.value
+
+    @property
     def json(self):
         value = self.value
         if self.type_str == "block":
             # If it's a block id, then the value is not an array, just a block id
             inp = value
         else:
+            if self.type_str in ("broadcast", "variable", "list"):
+                vo = self.value_obj
+                if vo is None:
+                    value = ''
+                    self.type_id = 8
+                    self.value = ''
+                    self.input_id = None
+                else:
+                    value = vo.name
+
             inp = [self.type_id, value]
 
             if self.input_id is not None:
@@ -577,6 +604,9 @@ class Block(ProjectItem):
             self.next = next_block
             self.parent = parent_block
             self.inputs = inputs
+            for inp in inputs:
+                inp.block = self
+
             self.fields = fields
             self.is_shadow = shadow
             self.top_level = parent_block is None
@@ -592,10 +622,10 @@ class Block(ProjectItem):
 
             self.base_can_next = can_next
 
-            target: Target
-            if target is None:
-                target = md.CURRENT_TARGET
-            self.target = target
+        target: Target
+        if target is None:
+            target = md.CURRENT_TARGET
+        self.target = target
 
     @property
     def stack_type(self):
@@ -639,9 +669,20 @@ class Block(ProjectItem):
                 # Numbers, colors & strings
                 _json.append(self.value)
             else:
+                if self.type_id == 11:
+                    item_obj = self.target.get_broadcast_by_id(self.item_id)
+                elif self.type_id == 12:
+                    item_obj = self.target.get_var_by_id(self.item_id)
+                else:
+                    item_obj = self.target.get_list_by_id(self.item_id)
+
                 # Broadcasts, variables & lists
-                _json.append(self.name)
-                _json.append(self.item_id)
+                if item_obj is None:
+                    _json.append(None)
+                    _json.append(self.item_id)
+                else:
+                    _json.append(item_obj.name)
+                    _json.append(self.item_id)
 
             if self.x is not None and self.y is not None:
                 _json.append(self.x)
@@ -762,7 +803,11 @@ class Block(ProjectItem):
 
             comment_id = data.get("comment")
 
-            return Block(_id, opcode, next_, parent, inputs, fields, is_shadow, (x, y), comment_id, mutation)
+            block = Block(_id, opcode, next_, parent, inputs, fields, is_shadow, (x, y), comment_id, mutation)
+            for inp in block.inputs:
+                inp.parent = block
+
+            return block
 
     def get_input(self, input_id: str):
         for input_ in self.inputs:
@@ -778,7 +823,7 @@ class Block(ProjectItem):
     def add_input(self, inp: Input):
         if self.type != "Normal":
             raise ValueError("Can't add inputs to an array block!")
-
+        inp.parent = self
         new_inps = [inp]
         for input_ in self.inputs:
             if input_.id != inp.id:
@@ -921,13 +966,16 @@ class Block(ProjectItem):
             return
 
         for input_ in self.inputs:
+            input_.parent = self
+
             if input_.type_str == "block":
                 block = self.target.get_block_by_id(input_.value)
 
-                if hasattr(block, "run"):
-                    block.run(self.target, self)
+                if block is not None:
+                    if hasattr(block, "run"):
+                        block.run(self.target, self)
 
-                block.parent = self.id
+                    block.parent = self.id
 
             if input_.obscurer is not None:
                 if isinstance(input_.obscurer, str):
@@ -973,6 +1021,7 @@ class Block(ProjectItem):
             _full_chain.append(child.subtree)
 
         if self.next is not None:
+            print(self.next)
             next_block = self.target.get_block_by_id(self.next)
             _full_chain += next_block.subtree
 
@@ -984,13 +1033,18 @@ class Block(ProjectItem):
             return []
 
         _children = []
+
         for input_ in self.inputs:
             if input_.type_str == "block":
+                block = None
                 if isinstance(input_.value, list):
                     block = Block(array=input_.value)
+
                 else:
-                    block = self.target.get_block_by_id(input_.value)
-                _children.append(block)
+                    if input_.value is not None:
+                        block = self.target.get_block_by_id(input_.value)
+                if block is not None:
+                    _children.append(block)
 
             if input_.obscurer is not None:
                 if isinstance(input_.obscurer, list):
@@ -1677,6 +1731,16 @@ class Target(ProjectItem):
         for list_ in self.lists:
             if list_.name == name:
                 return list_
+
+    def get_list_by_id(self, _id: str):
+        for list_ in self.lists:
+            if list_.id == _id:
+                return list_
+
+    def get_var_by_id(self, _id: str):
+        for var in self.variables:
+            if var.id == _id:
+                return var
 
     def add_list(self, name: str, value: list = None):
         possible_list = self.get_list_by_name(name)

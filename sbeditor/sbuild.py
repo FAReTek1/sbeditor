@@ -1,5 +1,4 @@
 from .sbeditor import *
-from .common import md
 
 
 class Motion:
@@ -16,7 +15,7 @@ class Motion:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("STEPS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("STEPS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class TurnRight(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -31,7 +30,7 @@ class Motion:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("DEGREES", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("DEGREES", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class TurnLeft(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -46,7 +45,7 @@ class Motion:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("DEGREES", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("DEGREES", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class GoTo(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -60,7 +59,8 @@ class Motion:
             elif isinstance(value, list) or isinstance(value, tuple):
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
-            return self.add_input(Input("TO", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+            return self.add_input(
+                Input("TO", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class GoToMenu(Block):
         def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
@@ -81,7 +81,8 @@ class Motion:
             elif isinstance(value, list) or isinstance(value, tuple):
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
-            return self.add_input(Input("X", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+            return self.add_input(
+                Input("X", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_y(self, value, input_type: str | int = "number", shadow_status: int = 1, *,
                   input_id: str = None, obscurer: str | Block = None):
@@ -91,7 +92,8 @@ class Motion:
             elif isinstance(value, list) or isinstance(value, tuple):
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
-            return self.add_input(Input("Y", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+            return self.add_input(
+                Input("Y", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class GlideTo(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -105,7 +107,8 @@ class Motion:
             elif isinstance(value, list) or isinstance(value, tuple):
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
-            return self.add_input(Input("SECS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+            return self.add_input(
+                Input("SECS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_to(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                    input_id: str = None, obscurer: str | Block = None):
@@ -115,7 +118,8 @@ class Motion:
             elif isinstance(value, list) or isinstance(value, tuple):
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
-            return self.add_input(Input("TO", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+            return self.add_input(
+                Input("TO", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class GlideToMenu(Block):
         def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
@@ -136,7 +140,8 @@ class Motion:
             elif isinstance(value, list) or isinstance(value, tuple):
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
-            return self.add_input(Input("X", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+            return self.add_input(
+                Input("X", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_y(self, value, input_type: str | int = "number", shadow_status: int = 1, *,
                   input_id: str = None, obscurer: str | Block = None):
@@ -146,7 +151,8 @@ class Motion:
             elif isinstance(value, list) or isinstance(value, tuple):
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
-            return self.add_input(Input("Y", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+            return self.add_input(
+                Input("Y", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_secs(self, value, input_type: str | int = "positive number", shadow_status: int = 1, *,
                      input_id: str = None, obscurer: str | Block = None):
@@ -156,7 +162,8 @@ class Motion:
             elif isinstance(value, list) or isinstance(value, tuple):
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
-            return self.add_input(Input("SECS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+            return self.add_input(
+                Input("SECS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class PointInDirection(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -171,7 +178,7 @@ class Motion:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("DIRECTION", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("DIRECTION", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class PointTowards(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -186,7 +193,7 @@ class Motion:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("TOWARDS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("TOWARDS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class PointTowardsMenu(Block):
         def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
@@ -207,7 +214,8 @@ class Motion:
             elif isinstance(value, list) or isinstance(value, tuple):
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
-            return self.add_input(Input("DX", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+            return self.add_input(
+                Input("DX", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class ChangeYBy(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -221,7 +229,8 @@ class Motion:
             elif isinstance(value, list) or isinstance(value, tuple):
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
-            return self.add_input(Input("DY", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+            return self.add_input(
+                Input("DY", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class SetX(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -235,7 +244,8 @@ class Motion:
             elif isinstance(value, list) or isinstance(value, tuple):
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
-            return self.add_input(Input("X", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+            return self.add_input(
+                Input("X", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class SetY(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -249,7 +259,8 @@ class Motion:
             elif isinstance(value, list) or isinstance(value, tuple):
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
-            return self.add_input(Input("Y", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+            return self.add_input(
+                Input("Y", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class IfOnEdgeBounce(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -287,7 +298,7 @@ class Motion:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("DISTANCE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("DISTANCE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class ScrollUp(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -302,7 +313,7 @@ class Motion:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("DISTANCE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("DISTANCE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class AlignScene(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -334,7 +345,7 @@ class Looks:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("MESSAGE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer)
+                Input("MESSAGE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self)
             )
 
         def set_secs(self, value=2, input_type: str | int = "positive integer", shadow_status: int = 1, *,
@@ -346,7 +357,7 @@ class Looks:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("SECS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer)
+                Input("SECS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self)
             )
 
     class Say(Block):
@@ -362,7 +373,7 @@ class Looks:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("MESSAGE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer)
+                Input("MESSAGE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self)
             )
 
     class ThinkForSecs(Block):
@@ -378,7 +389,7 @@ class Looks:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("MESSAGE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer)
+                Input("MESSAGE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self)
             )
 
         def set_secs(self, value=2, input_type: str | int = "positive integer", shadow_status: int = 1, *,
@@ -390,7 +401,7 @@ class Looks:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("SECS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer)
+                Input("SECS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self)
             )
 
     class Think(Block):
@@ -406,7 +417,7 @@ class Looks:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("MESSAGE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer)
+                Input("MESSAGE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self)
             )
 
     class SwitchCostumeTo(Block):
@@ -422,7 +433,7 @@ class Looks:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("COSTUME", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("COSTUME", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class Costume(Block):
         def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
@@ -448,7 +459,7 @@ class Looks:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("BACKDROP", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("BACKDROP", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class Backdrops(Block):
         def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
@@ -470,7 +481,7 @@ class Looks:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("BACKDROP", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("BACKDROP", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class NextBackdrop(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -489,7 +500,7 @@ class Looks:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("CHANGE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("CHANGE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class SetSizeTo(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -504,7 +515,7 @@ class Looks:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("SIZE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("SIZE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class ChangeEffectBy(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -519,7 +530,7 @@ class Looks:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("CHANGE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("CHANGE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_effect(self, value: str = "COLOR", value_id: str = None):
             return self.add_field(Field("EFFECT", value, value_id))
@@ -537,7 +548,7 @@ class Looks:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("VALUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("VALUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_effect(self, value: str = "COLOR", value_id: str = None):
             return self.add_field(Field("EFFECT", value, value_id))
@@ -574,7 +585,7 @@ class Looks:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("NUM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("NUM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_fowrward_backward(self, value: str = "forward", value_id: str = None):
             return self.add_field(Field("FORWARD_BACKWARD", value, value_id))
@@ -614,7 +625,7 @@ class Looks:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("STRETCH", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("STRETCH", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class ChangeStretchBy(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -629,7 +640,7 @@ class Looks:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("CHANGE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("CHANGE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
 
 class Sounds:
@@ -646,7 +657,7 @@ class Sounds:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("SOUND_MENU", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("SOUND_MENU", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class SoundsMenu(Block):
         def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
@@ -668,7 +679,7 @@ class Sounds:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("SOUND_MENU", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("SOUND_MENU", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class StopAllSounds(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -687,7 +698,7 @@ class Sounds:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("VALUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("VALUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_effect(self, value: str = "PITCH", value_id: str = None):
             return self.add_field(Field("EFFECT", value, value_id))
@@ -705,7 +716,7 @@ class Sounds:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("VALUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("VALUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_effect(self, value: str = "PITCH", value_id: str = None):
             return self.add_field(Field("EFFECT", value, value_id))
@@ -727,7 +738,7 @@ class Sounds:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("VOLUME", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("VOLUME", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class SetVolumeTo(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -742,7 +753,7 @@ class Sounds:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("VOLUME", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("VOLUME", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class Volume(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -789,7 +800,7 @@ class Events:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("VALUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("VALUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_when_greater_than_menu(self, value: str = "LOUDNESS", value_id: str = None):
             return self.add_field(Field("WHENGREATERTHANMENU", value, value_id))
@@ -814,7 +825,8 @@ class Events:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("BROADCAST_INPUT", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("BROADCAST_INPUT", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer,
+                      block=self))
 
     class BroadcastAndWait(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -829,7 +841,8 @@ class Events:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("BROADCAST_INPUT", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("BROADCAST_INPUT", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer,
+                      block=self))
 
     class WhenTouchingObject(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -844,7 +857,8 @@ class Events:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("TOUCHINGOBJECTMENU", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("TOUCHINGOBJECTMENU", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer,
+                      block=self))
 
     class TouchingObjectMenu(Block):
         def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
@@ -868,7 +882,7 @@ class Control:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("DURATION", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("DURATION", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class Forever(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -955,7 +969,7 @@ class Control:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("CONDITION", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("CONDITION", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class RepeatUntil(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -1033,7 +1047,8 @@ class Control:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("CLONE_OPTION", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("CLONE_OPTION", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer,
+                      block=self))
 
     class CreateCloneOfMenu(Block):
         def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
@@ -1114,7 +1129,8 @@ class Sensing:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("TOUCHINGOBJECTMENU", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("TOUCHINGOBJECTMENU", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer,
+                      block=self))
 
     class TouchingObjectMenu(Block):
         def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
@@ -1136,7 +1152,7 @@ class Sensing:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("COLOR", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("COLOR", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class ColorIsTouchingColor(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -1151,7 +1167,7 @@ class Sensing:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("COLOR", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("COLOR", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_color2(self, value="#00FF00", input_type: str | int = "color", shadow_status: int = 1, *,
                        input_id: str = None, obscurer: str | Block = None):
@@ -1162,7 +1178,7 @@ class Sensing:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("COLOR2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("COLOR2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class DistanceTo(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -1177,7 +1193,8 @@ class Sensing:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("DISTANCETOMENU", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("DISTANCETOMENU", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer,
+                      block=self))
 
     class DistanceToMenu(Block):
         def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
@@ -1203,7 +1220,7 @@ class Sensing:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("QUESTION", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer)
+                Input("QUESTION", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self)
             )
 
     class Answer(Block):
@@ -1223,7 +1240,7 @@ class Sensing:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("KEY_OPTION", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("KEY_OPTION", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class KeyOptions(Block):
         def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
@@ -1276,7 +1293,7 @@ class Sensing:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("OBJECT", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("OBJECT", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_property(self, value: str = "backdrop #", value_id: str = None):
             return self.add_field(Field("PROPERTY", value, value_id))
@@ -1322,7 +1339,7 @@ class Operators:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("NUM1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("NUM1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_num2(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
                      input_id: str = None, obscurer: str | Block = None):
@@ -1333,7 +1350,7 @@ class Operators:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("NUM2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("NUM2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class Subtract(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -1348,7 +1365,7 @@ class Operators:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("NUM1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("NUM1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_num2(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
                      input_id: str = None, obscurer: str | Block = None):
@@ -1359,7 +1376,7 @@ class Operators:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("NUM2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("NUM2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class Multiply(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -1374,7 +1391,7 @@ class Operators:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("NUM1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("NUM1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_num2(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
                      input_id: str = None, obscurer: str | Block = None):
@@ -1385,7 +1402,7 @@ class Operators:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("NUM2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("NUM2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class Divide(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -1400,7 +1417,7 @@ class Operators:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("NUM1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("NUM1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_num2(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
                      input_id: str = None, obscurer: str | Block = None):
@@ -1411,7 +1428,7 @@ class Operators:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("NUM2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("NUM2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class Random(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -1426,7 +1443,7 @@ class Operators:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("FROM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("FROM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_to(self, value="10", input_type: str | int = "number", shadow_status: int = 1, *,
                    input_id: str = None, obscurer: str | Block = None):
@@ -1437,7 +1454,7 @@ class Operators:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("TO", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("TO", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class GT(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -1452,7 +1469,7 @@ class Operators:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("OPERAND1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("OPERAND1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_operand2(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
                          input_id: str = None, obscurer: str | Block = None):
@@ -1463,7 +1480,7 @@ class Operators:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("OPERAND2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("OPERAND2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class LT(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -1478,7 +1495,7 @@ class Operators:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("OPERAND1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("OPERAND1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_operand2(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
                          input_id: str = None, obscurer: str | Block = None):
@@ -1489,7 +1506,7 @@ class Operators:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("OPERAND2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("OPERAND2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class Equals(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -1504,7 +1521,7 @@ class Operators:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("OPERAND1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("OPERAND1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_operand2(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
                          input_id: str = None, obscurer: str | Block = None):
@@ -1515,7 +1532,7 @@ class Operators:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("OPERAND2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("OPERAND2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class And(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -1530,7 +1547,7 @@ class Operators:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("OPERAND1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("OPERAND1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_operand2(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
                          input_id: str = None, obscurer: str | Block = None):
@@ -1541,7 +1558,7 @@ class Operators:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("OPERAND2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("OPERAND2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class Or(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -1556,7 +1573,7 @@ class Operators:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("OPERAND1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("OPERAND1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_operand2(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                          input_id: str = None, obscurer: str | Block = None):
@@ -1567,7 +1584,7 @@ class Operators:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("OPERAND2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("OPERAND2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class Not(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -1582,7 +1599,7 @@ class Operators:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("OPERAND", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("OPERAND", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class Join(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -1597,7 +1614,7 @@ class Operators:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("STRING1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("STRING1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_string2(self, value="banana", input_type: str | int = "string", shadow_status: int = 1, *,
                         input_id: str = None, obscurer: str | Block = None):
@@ -1608,7 +1625,7 @@ class Operators:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("STRING2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("STRING2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class LetterOf(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -1623,7 +1640,7 @@ class Operators:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("LETTER", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("LETTER", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_string(self, value="apple", input_type: str | int = "string", shadow_status: int = 1, *,
                        input_id: str = None, obscurer: str | Block = None):
@@ -1634,7 +1651,7 @@ class Operators:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("STRING", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("STRING", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class Length(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -1649,7 +1666,7 @@ class Operators:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("STRING", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("STRING", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class Contains(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -1664,7 +1681,7 @@ class Operators:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("STRING1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("STRING1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_string2(self, value="a", input_type: str | int = "string", shadow_status: int = 1, *,
                         input_id: str = None, obscurer: str | Block = None):
@@ -1675,7 +1692,7 @@ class Operators:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("STRING2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("STRING2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class Mod(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -1690,7 +1707,7 @@ class Operators:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("NUM1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("NUM1", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_num2(self, value='', input_type: str | int = "number", shadow_status: int = 1, *,
                      input_id: str = None, obscurer: str | Block = None):
@@ -1701,7 +1718,7 @@ class Operators:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("NUM2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("NUM2", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class Round(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -1716,7 +1733,7 @@ class Operators:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("NUM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("NUM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class MathOp(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -1731,7 +1748,7 @@ class Operators:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("NUM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("NUM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_operator(self, value: str = "abs", value_id: str = None):
             return self.add_field(Field("OPERATOR", value, value_id))
@@ -1774,7 +1791,7 @@ class Data:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("VALUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("VALUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_variable(self, value: str | Variable = "variable", value_id: str = None):
             return self.add_field(Field("VARIABLE", value, value_id))
@@ -1792,7 +1809,7 @@ class Data:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("VALUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("VALUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_variable(self, value: str | Variable = "variable", value_id: str = None):
             return self.add_field(Field("VARIABLE", value, value_id))
@@ -1842,7 +1859,7 @@ class Data:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("ITEM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("ITEM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_list(self, value: str | List = "list", value_id: str = None):
             return self.add_field(Field("LIST", value, value_id))
@@ -1860,7 +1877,7 @@ class Data:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("INDEX", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("INDEX", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_list(self, value: str | List = "list", value_id: str = None):
             return self.add_field(Field("LIST", value, value_id))
@@ -1878,7 +1895,7 @@ class Data:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("ITEM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("ITEM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_index(self, value="random", input_type: str | int = "positive integer", shadow_status: int = 1, *,
                       input_id: str = None, obscurer: str | Block = None):
@@ -1889,7 +1906,7 @@ class Data:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("INDEX", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("INDEX", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_list(self, value: str | List = "list", value_id: str = None):
             return self.add_field(Field("LIST", value, value_id))
@@ -1914,7 +1931,7 @@ class Data:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("ITEM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("ITEM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_index(self, value="random", input_type: str | int = "positive integer", shadow_status: int = 1, *,
                       input_id: str = None, obscurer: str | Block = None):
@@ -1925,7 +1942,7 @@ class Data:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("INDEX", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("INDEX", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_list(self, value: str | List = "list", value_id: str = None):
             return self.add_field(Field("LIST", value, value_id))
@@ -1943,7 +1960,7 @@ class Data:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("INDEX", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("INDEX", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_list(self, value: str | List = "list", value_id: str = None):
             return self.add_field(Field("LIST", value, value_id))
@@ -1961,7 +1978,7 @@ class Data:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("ITEM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("ITEM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_list(self, value: str | List = "list", value_id: str = None):
             return self.add_field(Field("LIST", value, value_id))
@@ -1986,7 +2003,7 @@ class Data:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("ITEM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("ITEM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_list(self, value: str | List = "list", value_id: str = None):
             return self.add_field(Field("LIST", value, value_id))
@@ -2028,7 +2045,8 @@ class Proc:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("custom_block", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("custom_block", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer,
+                      block=self))
 
     class Call(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -2055,7 +2073,7 @@ class Proc:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input(arg, value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input(arg, value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class Declaration(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -2098,7 +2116,7 @@ class Proc:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input(arg, value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input(arg, value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
 
 class Args:
@@ -2160,7 +2178,8 @@ class Addons:
 
         def set_message(self, value='', input_type: str | int = "string", shadow_status: int = 1, *,
                         input_id: str = None, obscurer: str | Block = None):
-            return self.set_arg("arg0", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer)
+            return self.set_arg("arg0", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer,
+                                )
 
     class Warn(Proc.Call):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -2170,7 +2189,8 @@ class Addons:
 
         def set_message(self, value='', input_type: str | int = "string", shadow_status: int = 1, *,
                         input_id: str = None, obscurer: str | Block = None):
-            return self.set_arg("arg0", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer)
+            return self.set_arg("arg0", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer,
+                                )
 
     class Error(Proc.Call):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -2180,7 +2200,8 @@ class Addons:
 
         def set_message(self, value='', input_type: str | int = "string", shadow_status: int = 1, *,
                         input_id: str = None, obscurer: str | Block = None):
-            return self.set_arg("arg0", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer)
+            return self.set_arg("arg0", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer,
+                                )
 
 
 class Pen:
@@ -2213,7 +2234,7 @@ class Pen:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("COLOR", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("COLOR", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class ChangePenParamBy(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -2228,7 +2249,8 @@ class Pen:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("COLOR_PARAM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("COLOR_PARAM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer,
+                      block=self))
 
         def set_value(self, value="10", input_type: str | int = "number", shadow_status: int = 1, *,
                       input_id: str = None, obscurer: str | Block = None):
@@ -2239,7 +2261,7 @@ class Pen:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("VALUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("VALUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class SetPenParamTo(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -2254,7 +2276,8 @@ class Pen:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("COLOR_PARAM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("COLOR_PARAM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer,
+                      block=self))
 
         def set_value(self, value="10", input_type: str | int = "number", shadow_status: int = 1, *,
                       input_id: str = None, obscurer: str | Block = None):
@@ -2265,7 +2288,7 @@ class Pen:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("VALUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("VALUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class ChangePenSizeBy(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -2280,7 +2303,7 @@ class Pen:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("SIZE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("SIZE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class SetPenSizeTo(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -2295,7 +2318,7 @@ class Pen:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("SIZE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("SIZE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class SetPenHueTo(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -2310,7 +2333,7 @@ class Pen:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("HUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("HUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class ChangePenHueBy(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -2325,7 +2348,7 @@ class Pen:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("HUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("HUE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class SetPenShadeTo(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -2340,7 +2363,7 @@ class Pen:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("SHADE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("SHADE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class ChangePenShadeBy(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -2355,7 +2378,7 @@ class Pen:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("SHADE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("SHADE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class ColorParamMenu(Block):
         def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
@@ -2379,7 +2402,7 @@ class Music:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("DRUM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("DRUM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_beats(self, value="0.25", input_type: str | int = "positive number", shadow_status: int = 1, *,
                       input_id: str = None, obscurer: str | Block = None):
@@ -2390,7 +2413,7 @@ class Music:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("BEATS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("BEATS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class PlayNoteForBeats(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -2405,7 +2428,7 @@ class Music:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("NOTE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("NOTE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_beats(self, value="0.25", input_type: str | int = "positive number", shadow_status: int = 1, *,
                       input_id: str = None, obscurer: str | Block = None):
@@ -2416,7 +2439,7 @@ class Music:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("BEATS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("BEATS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class RestForBeats(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -2431,7 +2454,7 @@ class Music:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("BEATS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("BEATS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class SetTempo(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -2446,7 +2469,7 @@ class Music:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("TEMPO", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("TEMPO", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class ChangeTempo(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -2461,7 +2484,7 @@ class Music:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("TEMPO", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("TEMPO", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class GetTempo(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -2480,7 +2503,7 @@ class Music:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("INSTRUMENT", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("INSTRUMENT", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class MidiPlayDrumForBeats(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -2495,7 +2518,7 @@ class Music:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("DRUM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("DRUM", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_beats(self, value="1", input_type: str | int = "positive number", shadow_status: int = 1, *,
                       input_id: str = None, obscurer: str | Block = None):
@@ -2506,7 +2529,7 @@ class Music:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("BEATS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("BEATS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class MidiSetInstrument(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -2521,7 +2544,7 @@ class Music:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("INSTRUMENT", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("INSTRUMENT", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class MenuDrum(Block):
         def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
@@ -2552,7 +2575,7 @@ class VideoSensing:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("REFERENCE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("REFERENCE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class VideoOn(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -2567,7 +2590,7 @@ class VideoSensing:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("ATTRIBUTE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("ATTRIBUTE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_subject(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                         input_id: str = None, obscurer: str | Block = None):
@@ -2578,7 +2601,7 @@ class VideoSensing:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("SUBJECT", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("SUBJECT", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class MenuAttribute(Block):
         def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
@@ -2607,7 +2630,8 @@ class VideoSensing:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("VIDEO_STATE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("VIDEO_STATE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer,
+                      block=self))
 
     class MenuVideoState(Block):
         def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
@@ -2629,7 +2653,8 @@ class VideoSensing:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("TRANSPARENCY", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("TRANSPARENCY", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer,
+                      block=self))
 
 
 class Text2Speech:
@@ -2646,7 +2671,7 @@ class Text2Speech:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("WORDS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("WORDS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class SetVoice(Block):
         def __init__(self, *, shadow: bool = False, pos: tuple[int | float, int | float] = (0, 0)):
@@ -2661,7 +2686,7 @@ class Text2Speech:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("VOICE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("VOICE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class MenuVoices(Block):
         def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
@@ -2683,7 +2708,7 @@ class Text2Speech:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("LANGUAGE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("LANGUAGE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class MenuLanguages(Block):
         def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
@@ -2707,7 +2732,7 @@ class Translate:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("WORDS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("WORDS", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
         def set_language(self, value, input_type: str | int = "block", shadow_status: int = 1, *,
                          input_id: str = None, obscurer: str | Block = None):
@@ -2718,7 +2743,7 @@ class Translate:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("LANGUAGE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("LANGUAGE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class MenuLanguages(Block):
         def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
@@ -2746,7 +2771,7 @@ class MakeyMakey:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("KEY", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("KEY", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class MenuKey(Block):
         def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
@@ -2768,7 +2793,7 @@ class MakeyMakey:
                 if isinstance(value[0], Block):
                     value = self.target.link_chain(value)
             return self.add_input(
-                Input("SEQUENCE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer))
+                Input("SEQUENCE", value, input_type, shadow_status, input_id=input_id, obscurer=obscurer, block=self))
 
     class MenuSequence(Block):
         def __init__(self, *, shadow: bool = True, pos: tuple[int | float, int | float] = (0, 0)):
