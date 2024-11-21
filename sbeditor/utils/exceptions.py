@@ -1,0 +1,2 @@
+class InvalidProjectError(Exception):
+    pass

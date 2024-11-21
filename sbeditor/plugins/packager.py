@@ -1,7 +1,7 @@
 import copy
 import warnings
 
-from sbeditor.common import md
+from sbeditor.utils.common import md
 from sbeditor.sbuild import Data, Block, Target, Operators, Input
 
 ret_idxs = {}
